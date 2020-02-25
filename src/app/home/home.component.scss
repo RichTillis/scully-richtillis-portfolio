@@ -1,0 +1,144 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  font-size: 18px;
+  background-color: #f8f8f8;
+  min-height: 50px;
+  margin-bottom: 20px;
+  border: 1px solid #cacaca;
+  border-bottom-width: 1px;
+}
+.nav-container {
+  display: flex;
+}
+
+.main-nav {
+  list-style-type: none;
+  display: none;
+}
+
+.nav-links {
+  text-decoration: none;
+  color: #006699;
+}
+
+.main-nav li {
+  text-align: center;
+  margin: 15px auto;
+}
+
+.logo {
+  width: 145px;
+  margin-left: 20px;
+  margin-top: 15px;
+  max-width: 150px;
+}
+
+.navbar-toggle {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  cursor: pointer;
+  color: #777;
+  font-size: 24px;
+}
+
+.icon {
+  color: #777;
+  padding: 15px;
+}
+
+.active {
+  display: block;
+}
+
+.ellipsis-social {
+  display: none;
+}
+
+body {
+  font-family: "Josefin Sans", sans-serif;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media screen and (min-width: 576px) {
+}
+
+/* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
+@media screen and (min-width: 768px) {
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0;
+    height: 70px;
+    align-items: center;
+  }
+
+  .main-nav {
+    display: flex;
+    margin-right: 30px;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+
+  .main-nav li {
+    margin: 0;
+  }
+
+  .nav-links {
+    margin-left: 40px;
+  }
+
+  .navbar-toggle {
+    display: none;
+  }
+
+  .logo:hover,
+  .nav-links:hover {
+    color: #006699;
+  }
+
+  .logo {
+    margin-top: 0;
+  }
+
+  .ellipsis-social {
+    display: inline-block;
+    position: absolute;
+    right: 40px;
+    cursor: pointer;
+    color: #777;
+    font-size: 24px;
+  }
+
+  .nav-social{
+    display: none;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media screen and (min-width: 992px) {
+
+  .ellipsis-social {
+    display: none;
+  }
+
+  .nav-social{
+    display: inline-block;
+    position: absolute;
+    right: 0;
+  }
+
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media screen and (min-width: 1200px) {
+}

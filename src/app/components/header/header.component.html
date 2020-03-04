@@ -1,27 +1,46 @@
 <nav class="navbar">
     <div class="nav-container">
-        <span class="navbar-toggle">
-            <i class="fa fa-bars"></i>
+        <!-- <span class="navbar-menu" *ngIf="!menuOpen">
+            <a class="fa fa-bars" (click)='toggleMenu()'></a>
         </span>
+        <span class="navbar-menu" *ngIf="menuOpen">
+            <a class="fa fa-times" (click)='toggleMenu()'></a>
+        </span> -->
         <span class="ellipsis-social">
             <i class="fa fa-ellipsis-v"></i>
         </span>
         <div class="nav-logo">
             <a href="#"><img src="../../assets/images/logo.svg" class="logo"></a>
         </div>
-        <div class="nav-menu">
-            <ul class="main-nav menu" id="js-menu">
+        <input id="hamburger" class="hamburger" type="checkbox" />
+        <label class="hamburger" for="hamburger">
+            <i></i>
+            <!-- <div id="text">
+                <div id="close"></div>
+                <div id="open"></div>
+            </div> -->
+        </label>
+        <section class="drawer-list">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="/projects">Side Projects</a></li>
+                <li><a href="/about">Lil About Me</a></li>
+            </ul>
+        </section>
+        <!-- <section >
+            <ul class="main-nav">
                 <li>
                     <a href="/blog" class="nav-links">Blog</a>
                 </li>
                 <li>
-                    <a href="/projects" class="nav-links">Projects</a>
+                    <a href="/projects" class="nav-links">Side Projects</a>
                 </li>
                 <li>
-                    <a href="/about" class="nav-links">About</a>
+                    <a href="/about" class="nav-links">Lil About Me</a>
                 </li>
             </ul>
-        </div>
+        </section>
         <div class="nav-social">
             <ul class="main-nav">
                 <li>
@@ -50,6 +69,6 @@
                     </a>
                 </li>
             </ul>
-        </div>
+        </div> -->
     </div>
 </nav>

@@ -1,0 +1,50 @@
+.about-section {
+  display: flex;
+  height: 400px;
+  flex-flow: row wrap;
+  text-align: center;
+  margin: 0 auto;
+  max-width: 1000px;
+}
+.about-child {
+  width: 350px;
+  height: 350px;
+  margin: auto;
+
+  p {
+    font-size: 16px;
+  }
+}
+.profile-pic {
+  max-width: 50%;
+  border-radius: 50%;
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media screen and (min-width: 576px) {
+}
+
+/* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
+@media screen and (min-width: 768px) {
+  #about {
+    margin-top: 100px;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media screen and (min-width: 992px) {
+  .child {
+    width: 600px;
+    height: 450px;
+    margin: auto;
+  }
+
+  .profile-pic {
+    max-width: 75%;
+    border-radius: 50%;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media screen and (min-width: 1200px) {
+}

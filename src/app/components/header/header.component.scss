@@ -1,345 +1,162 @@
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
+.header-container {
 
-@mixin transition {
-  @for $i from 1 through 50 {
-    &:nth-child(#{$i}) {
-      transition: transform 1s #{$i * 0.08}s cubic-bezier(0.29, 1.4, 0.44, 0.96);
-    }
-  }
-}
-
-@mixin alpha-attribute($attribute, $color, $background) {
-  $percent: alpha($color) * 100%;
-  $opaque: opacify($color, 1);
-  $solid-color: mix($opaque, $background, $percent);
-  #{$attribute}: $solid-color;
-  #{$attribute}: $color;
-}
-
-body {
-  margin: 0;
-  overflow-x: hidden;
-  height: 100vh;
-  width: 100vw;
-}
-
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-$main: #1184f0;
-$text: #fefefe;
-$contrast: darken($main, 10%);
-
-.drawer-list {
-  position: fixed;
-  right: 0;
-  top: 0;
-  height: 100vh;
-  width: 100vw;
-  transform: translate(100vw, 0);
-  /* ie workaround */
-  -ms-transform: translatex(-100vw);
-  box-sizing: border-box;
-  pointer-events: none;
-  padding-top: 125px;
-  transition: width 475ms ease-out, transform 450ms ease, border-radius 0.8s 0.1s ease;
-  border-bottom-left-radius: 100vw;
-  @include alpha-attribute("background-color", rgba($contrast, 0.8), white);
-
-  // @media (min-width: 768px) {
-  //   width: 40vw;
-  // }
-
-  ul {
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    overflow: auto;
-    overflow-x: hidden;
-    pointer-events: auto;
-  }
-
-  li {
-    list-style: none;
-    text-transform: uppercase;
-    pointer-events: auto;
-    white-space: nowrap;
-    box-sizing: border-box;
-    transform: translatex(100vw);
-    /* ie workaround */
-    -ms-transform: translatex(-100vw);
-
-    &:last-child {
-      margin-bottom: 2em;
-    }
-
-    a {
-      text-decoration: none;
-      color: $text;
-      text-align: center;
-      display: block;
-      padding: 1rem;
-      font-size: calc(24px - 0.5vw);
-
-      // @media (min-width: 768px) {
-      //   text-align: right;
-      //   padding: 0.5rem;
-      // }
-
-      &:hover {
-        cursor: pointer;
-        @include alpha-attribute("background-color", rgba($main, 0.5), white);
-      }
-    }
-  }
-}
-
-input.hamburger {
-  display: none;
-
-  &:checked {
-    &~.drawer-list {
-      transform: translatex(0);
-      border-bottom-left-radius: 0;
-
-      li {
-        transform: translatex(0);
-        @include transition;
-
-        a {
-          padding-right: 15px;
-        }
-      }
-    }
-
-    &~label {
-      >i {
-        background-color: transparent;
-        transform: rotate(90deg);
-
-        &:before {
-          transform: translate(-50%, -50%) rotate(315deg);
-        }
-
-        &:after {
-          transform: translate(-50%, -50%) rotate(-315deg);
-        }
-      }
-    }
-  }
-}
-
-label.hamburger {
-  z-index: 9999;
-  position: relative;
-  display: block;
-  height: 25px;
-  width: 25px;
-
-  &:hover {
-    cursor: pointer;
-  }
-
-  >i {
-    position: absolute;
-    width: 100%;
-    height: 2px;
-    top: 50%;
-    background-color: #777;
-    pointer-events: auto;
-    transition-duration: 0.35s;
-    transition-delay: 0.35s;
-
-    &:before,
-    &:after {
-      position: absolute;
-      display: block;
-      width: 100%;
-      height: 2px;
-      left: 50%;
-      background-color: #777;
-      content: "";
-      transition: transform 0.35s;
-      transform-origin: 50% 50%;
-    }
-
-    &:before {
-      background-color: #777;
-      transform: translate(-50%, -14px);
-    }
-
-    &:after {
-      transform: translate(-50%, 14px);
-      background-color: #777;
-    }
-  }
-}
-
-label.hamburger {
-  position: fixed;
-  top: 10px;
-  right: 20px;
-}
-
-.navbar {
-  position: fixed;
-  left: 0;
-  right: 0;
-  top: 0;
-  font-size: 18px;
-  background-color: #f8f8f8;
-  min-height: 50px;
-  margin-bottom: 20px;
-  border: 1px solid #cacaca;
-  border-bottom-width: 1px;
-}
-
-.nav-container {
   display: flex;
-}
-
-.nav-links {
-  text-decoration: none;
-  color: #006699;
+  justify-content: space-between;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  background: #f8f8f8;
+  border: 1px solid #cacaca;
+  height: 50px;
+  margin: 0 auto;
 }
 
 .logo {
   width: 145px;
-  margin-left: 20px;
-  margin-top: 15px;
+  margin: 14px 0 0 20px;
   max-width: 150px;
 }
 
-.navbar-menu {
-  // position: absolute;
-  top: 10px;
-  right: 20px;
-  cursor: pointer;
-  color: #777;
-  font-size: 24px;
+nav {
+  flex: 2
 }
 
-.icon {
-  color: #777;
-  padding: 15px;
-}
-
-.active {
+.site-nav ul {
   display: block;
-}
+  list-style-type: none;
+  margin-top: 50px;
+  background: #f8f8f8;
+  border-left: 1px solid #cacaca;
+  padding-left: 0;
 
-.ellipsis-social {
-  display: none;
-}
+  li {
+    padding-top: 20px;
+    text-align: center;
+    font-size: 22px;
 
-.main-nav {
-  display: none;
-}
-
-.social-nav {
-  display: none;
-}
-
-/* Small devices (landscape phones, 576px and up) */
-@media screen and (min-width: 576px) {}
-
-/* Medium devices (tablets, 768px and up) The navbar menu disappears at this breakpoint */
-@media screen and (min-width: 768px) {
-  input.hamburger {
-    display: none;
-  }
-
-  label.hamburger {
-    display: none;
-  }
-
-  .drawer-list {
-    display: none;
-  }
-
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 0;
-    height: 70px;
-    align-items: center;
-  }
-
-  .main-nav {
-    display: inline;
-
-    ul {
-      display: flex;
-      margin-right: 30px;
-      flex-direction: row;
-      justify-content: flex-end;
-
-      li {
-        margin: 0;
-      }
+    a {
+      color: #006699;
+      text-decoration: none;
     }
   }
 
-  .nav-links {
-    margin-left: 40px;
+  li:last-child {
+    padding-bottom: 20px;
+  }
+}
+
+.icon{
+  font-size: 14px;
+}
+
+.social-nav ul {
+  margin-top: -20px;
+  border: none;
+  display: flex;
+  justify-content: space-evenly;
+  list-style-type: none;
+  padding-left: 0;
+  background: #f8f8f8;
+  border-left: 1px solid #cacaca;
+  border-bottom: 1px solid #cacaca;
+
+  li {
+    padding-top: 0;
+    padding-bottom: 0;
+    font-size: 22px;
+    padding-bottom: 20px;
+
+    a {
+      color: #006699;
+      text-decoration: none;
+    }
+  }
+}
+
+.close-menu {
+  display: none;
+}
+
+.hamburger-menu-container {
+  position: fixed;
+  top: 10px;
+  right: 25px;
+  cursor: pointer;
+}
+
+.bar1,
+.bar2,
+.bar3 {
+  width: 30px;
+  height: 4px;
+  background-color: #333;
+  margin: 6px 0;
+  transition: 0.4s;
+}
+
+.change {
+  .bar1 {
+    -webkit-transform: rotate(-45deg) translate(-5px, 5px);
+    transform: rotate(-45deg) translate(-5px, 5px);
   }
 
-  .navbar-menu {
+  .bar2 {
+    opacity: 0;
+  }
+
+  .bar3 {
+    -webkit-transform: rotate(45deg) translate(-9px, -9px);
+    transform: rotate(45deg) translate(-9px, -9px);
+  }
+}
+
+
+/* Medium devices (tablets, 768px and up) The navbar menu disappears at this breakpoint */
+@media screen and (min-width: 768px) {
+
+  .hamburger-menu-container {
     display: none;
   }
 
-  .logo:hover,
-  .nav-links:hover {
-    color: #006699;
+  .nav-items {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
   }
 
-  .logo {
+  .site-nav ul {
+    display: flex;
     margin-top: 0;
+    border: 0;
+    background-color: inherit;
+
+    li {
+      padding: inherit;
+      padding-left: 25px;
+    }
   }
 
-  .ellipsis-social {
-    display: inline-block;
-    position: absolute;
-    right: 40px;
-    cursor: pointer;
-    color: #777;
-    font-size: 24px;
+  .social-nav ul {
+    display: flex;
+    margin-top: 0;
+    border: 0;
+    background-color: inherit;
+
+    li {
+      padding: inherit;
+      padding-left: 25px;
+    }
+
+    li:last-child {
+      padding-right: 30px;
+    }
   }
 
 }
 
 /* Large devices (desktops, 992px and up) */
-@media screen and (min-width: 992px) {
-  .ellipsis-social {
-    display: none;
-  }
-
-  .social-nav {
-    display: inline-block;
-    position: absolute;
-    right: 0;
-
-    ul {
-      display: flex;
-      margin-right: 30px;
-      flex-direction: row;
-      justify-content: flex-end;
-    }
-
-    li {
-      margin: 0;
-    }
-  }
-
-}
+@media screen and (min-width: 992px) {}
 
 /* Extra large devices (large desktops, 1200px and up) */
 @media screen and (min-width: 1200px) {}

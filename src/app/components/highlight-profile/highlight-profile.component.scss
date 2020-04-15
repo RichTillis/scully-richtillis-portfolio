@@ -1,47 +1,67 @@
 .about-section {
+  padding-top: 75px;
   display: flex;
-  // height: 550px;
-  flex-flow: row wrap;
+  flex-wrap: wrap;
   text-align: center;
   margin: 0 auto;
   max-width: 1080px;
+  padding-bottom: 50px;
 }
-.about-child {
-  // width: 300px;
-  // max-height: 350px;
+
+.about-left {
   margin: 0 auto;
 
   p {
     font-size: 16px;
   }
 }
+
 .profile-pic {
   max-width: 50%;
   border-radius: 50%;
 }
 
-#about {
-  margin-top: 75px;
+.about-right {
+  text-align: justify;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.more{
+  text-align: right;
+  font-size: 16px;
 }
 
 /* Small devices (landscape phones, 576px and up) */
-@media screen and (min-width: 576px) {
-}
+@media screen and (min-width: 576px) {}
 
 /* Medium devices (tablets, 768px and up) The navbar toggle appears at this breakpoint */
 @media screen and (min-width: 768px) {
-  .about-section {
-    // max-height: 400px;
+  .about-section {    
+    padding-top: 50px;
+    align-items: center;
+    font-size: 20px;
     padding-bottom: 50px;
+  }
+
+  .about-left {
+    flex: 1;
+  }
+
+  .about-right {
+    flex: 1;
+    text-align: justify;
+    padding-right: 80px;
+  }
+
+  .more{
+    text-align: right;
+    font-size: 16px;    
   }
 }
 
 /* Large devices (desktops, 992px and up) */
 @media screen and (min-width: 992px) {
-  .child {
-    width: 540px;
-    margin: auto;
-  }
 
   .profile-pic {
     max-width: 75%;
@@ -50,5 +70,4 @@
 }
 
 /* Extra large devices (large desktops, 1200px and up) */
-@media screen and (min-width: 1200px) {
-}
+@media screen and (min-width: 1200px) {}

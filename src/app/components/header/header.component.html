@@ -1,31 +1,33 @@
-<header class="header-container">
-  <a href="/home"><img src="../../assets/images/logo.svg" class="logo"></a>
+<header>
+  <div class="header-container">
+    <a href="/home"><img src="../../assets/images/logo.svg" class="logo"></a>
 
-  <nav>
-    <div class="hamburger-menu-container" (click)="toggleHamburgerMenu();" [ngClass]="{change: menuOpen}">
-      <div class="bar1"></div>
-      <div class="bar2"></div>
-      <div class="bar3"></div>
-    </div>
+    <nav>
+      <div class="hamburger-menu-container" (click)="toggleHamburgerMenu();" [ngClass]="{change: menuOpen}">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </div>
 
-    <div class="nav-items" [ngClass]="{'close-menu': !menuOpen}">
-      <div class="site-nav">
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/blog">Blog</a></li>
-          <li><a href="/projects">Projects</a></li>
-          <li><a href="/about">About Me</a></li>
-        </ul>
+      <div class="nav-items" [ngClass]="{'close-menu': !menuOpen}">
+        <div class="site-nav">
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/projects">Projects</a></li>
+            <li><a href="/about">About Me</a></li>
+          </ul>
+        </div>
+        <div class="social-nav">
+          <ul>
+            <li *ngFor="let socialLink of socialLinks">
+              <a [href]="socialLink.href" target="_blank" class="icon">
+                <span [class]="socialLink.icon"></span>
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="social-nav">
-        <ul>
-          <li *ngFor="let socialLink of socialLinks">
-            <a [href]="socialLink.href" target="_blank" class="icon">
-              <span [class]="socialLink.icon"></span>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+    </nav>
+  </div>
 </header>

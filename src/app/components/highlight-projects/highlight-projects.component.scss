@@ -28,6 +28,10 @@
   text-align: center;
 }
 
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
 .card-title {
   color: black;
 
@@ -46,16 +50,53 @@ img {
   border-radius: 25px;
 }
 
+.social-links ul {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  list-style-type: none;
+  padding-left: 0;
+
+  li{
+    padding-left: 15px;
+  }
+  li:first-child {
+    padding-left: 0;
+  }
+  a {
+    color: #006699;
+    text-decoration: none;
+  }
+
+}
+
+.card-body p {
+  margin-top: 0;
+}
+
+.icon {
+  font-size: 32px;
+}
+
 .button-container {
   padding-left: 0;
   list-style-type: none;
   display: flex;
   justify-content: center;
   flex-flow: row wrap;
+  align-items: flex-end;
 }
 
-.button-container li {
-  padding: 4px;
+.button-container {
+
+  li {
+    margin: 0 0 5px 5px;
+  }
+
+  li:first-child {
+    margin: 0 0 5px 0;
+  }
 }
 
 .button {
@@ -91,8 +132,13 @@ img {
 
 /* Medium devices (tablets, 768px and up) The navbar menu disappears at this breakpoint */
 @media screen and (min-width: 768px) {
+  .projects-section {
+    margin-left: 55px;
+    margin-right: 55px;
+  }
+
   .section-header {
-    margin-left: 75px;
+    margin-left: 20px;
   }
 
   .card-container {
@@ -101,7 +147,7 @@ img {
   }
 
   .more {
-    margin-right: 75px;
+    margin-right: 20px;
   }
 }
 

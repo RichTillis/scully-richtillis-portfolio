@@ -63,6 +63,10 @@
 
 /* Medium devices (tablets, 768px and up) The navbar menu disappears at this breakpoint */
 @media screen and (min-width: 768px) {
+  .blog-section {
+    padding-bottom: 50px;
+  }
+
   .section-header {
     margin-left: 75px;
   }

@@ -12,23 +12,28 @@ export class HeaderComponent implements OnInit {
   socialLinks = [
     {
       href: 'https://www.linkedin.com/in/richtillis/',
-      icon: 'fa fa-linkedin'
+      icon: "['fab', 'linkedin']"
+      // icon: 'fa fa-linkedin'
     },
     {
       href: 'mailto:rich@richtillis.com',
-      icon: 'fa fa-envelope-o'
+      icon: "['fas', 'at']"
+      // icon: 'fa fa-envelope-o'
     },
     {
       href: 'https://github.com/richtillis/',
-      icon: 'fa fa-github'
+      icon: "['fab', 'github']"
+      // icon: 'fa fa-github'
     },
     {
-      href: 'https://twitter.com/richtillis/',
-      icon: 'fa fa-twitter'
+      href: 'https://github.com/richtillis/',
+      icon: "['fab', 'twitter']"
+      // icon: 'fa fa-twitter'
     },
     {
       href: 'https://www.stackoverflow.com/users/4577397/richtillis/',
-      icon: 'fa fa-stack-overflow'
+      icon: "['fab', 'stack-overflow']"
+      // icon: 'fa fa-stack-overflow'      
     }
   ]
 

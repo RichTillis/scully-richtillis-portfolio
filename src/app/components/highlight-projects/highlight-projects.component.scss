@@ -76,7 +76,7 @@ img {
 }
 
 .icon {
-  font-size: 32px;
+  font-size: 24px;
 }
 
 .button-container {
@@ -144,6 +144,11 @@ img {
   .card-container {
     max-width: 960px;
     flex-flow: nowrap;
+  }
+
+  .card{
+    flex-grow: 1;
+    flex-basis: 0;
   }
 
   .more {

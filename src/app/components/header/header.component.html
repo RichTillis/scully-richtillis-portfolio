@@ -20,11 +20,37 @@
         </div>
         <div class="social-nav">
           <ul>
-            <li *ngFor="let socialLink of socialLinks">
-              <a [href]="socialLink.href" target="_blank" class="icon">
-                <span [class]="socialLink.icon"></span>
+            <li>
+              <a href='https://www.linkedin.com/in/richtillis/' target="_blank">
+                <fa-icon [icon]="['fab', 'linkedin']"></fa-icon>
               </a>
             </li>
+            <li>
+              <a href='mailto:rich@richtillis.com' target="_blank">
+                <fa-icon [icon]="['fas', 'at']"></fa-icon>
+              </a>
+            </li>
+            <li>
+              <a href='https://github.com/richtillis/' target="_blank">
+                <fa-icon [icon]="['fab', 'github']"></fa-icon>
+              </a>
+            </li>
+            <li>
+              <a href='https://github.com/richtillis/' target="_blank">
+                <fa-icon [icon]="['fab', 'twitter']"></fa-icon>
+              </a>
+            </li>
+            <li>
+              <a href='https://www.stackoverflow.com/users/4577397/richtillis/' target="_blank">
+                <fa-icon [icon]="['fab', 'stack-overflow']"></fa-icon>
+              </a>
+            </li>
+            <!-- <li *ngFor="let socialLink of socialLinks">
+              <a [href]="socialLink.href" target="_blank" class="icon">
+                <fa-icon [icon]="socialLink.icon"></fa-icon>
+                <span [class]="socialLink.icon"></span>
+              </a>
+            </li> -->
           </ul>
         </div>
       </div>

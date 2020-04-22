@@ -8,6 +8,7 @@ header {
   height: 50px;
 }
 
+
 .header-container {
   max-width: 1080px;
   display: flex;
@@ -55,6 +56,7 @@ nav {
 }
 
 .social-nav ul {
+  padding-top: 10px;
   margin-top: -20px;
   border: none;
   display: flex;
@@ -133,7 +135,7 @@ nav {
   }
 
   .site-nav ul {
-    display: flex;
+    display: flex !important; //wtf important???????????
     margin-top: 0;
     border: 0;
     background-color: inherit;
@@ -150,6 +152,7 @@ nav {
   .social-nav ul {
     display: flex;
     margin-top: 0;
+    padding-top: 0;
     border: 0;
     background-color: inherit;
 

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
-import { faStackOverflow, faGithub, faLinkedin, faTwitter, faGooglePlay, faAppStoreIos, faAppStore} from '@fortawesome/free-brands-svg-icons';
+import { faStackOverflow, faGithub, faLinkedin, faTwitter, faGooglePlay, faAppStoreIos, faAppStore } from '@fortawesome/free-brands-svg-icons';
 
 import { HighlightProjectsComponent } from './highlight-projects.component';
 
@@ -10,17 +10,17 @@ import { HighlightProjectsComponent } from './highlight-projects.component';
     imports: [CommonModule, FontAwesomeModule],
     exports: [HighlightProjectsComponent]
 })
-export class HighlightProjectsModule { 
+export class HighlightProjectsModule {
     constructor(private library: FaIconLibrary) {
         library.addIcons(
-          faStackOverflow, 
-          faGithub, 
-          faLinkedin,
-          faGithub,
-          faTwitter,
-          faGooglePlay,
-          faAppStoreIos,
-          faAppStore
-          );
-      }
+            faStackOverflow,
+            faGithub,
+            faLinkedin,
+            faGithub,
+            faTwitter,
+            faGooglePlay,
+            faAppStoreIos,
+            faAppStore
+        );
+    }
 }

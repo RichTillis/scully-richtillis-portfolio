@@ -5,13 +5,29 @@ import { ProjectsComponent } from './projects.component';
 import { ProjectsRoutingModule } from './projects-routing.module';
 
 import { HeaderModule } from '../../components/header/header.module'
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { faStackOverflow, faGithub, faLinkedin, faTwitter, faGooglePlay, faAppStoreIos, faAppStore } from '@fortawesome/free-brands-svg-icons';
 
 @NgModule({
   declarations: [ProjectsComponent],
   imports: [
     CommonModule,
     ProjectsRoutingModule,
-    HeaderModule
+    HeaderModule,
+    FontAwesomeModule
   ]
 })
-export class ProjectsModule { }
+export class ProjectsModule {
+  constructor(private library: FaIconLibrary) {
+    library.addIcons(
+      faStackOverflow,
+      faGithub,
+      faLinkedin,
+      faGithub,
+      faTwitter,
+      faGooglePlay,
+      faAppStoreIos,
+      faAppStore
+    );
+  }
+}

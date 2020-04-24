@@ -5,6 +5,16 @@ section {
   right: 0px;
 }
 
+.projects-intro {
+  margin-left: 25px;
+  margin-right: 25px;
+
+  p {
+    font-size: 20px;
+    line-height: 26px;
+  }
+}
+
 .hero-image {
   background-image: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)),
     url("src/assets/images/projects-index-background.jpg");
@@ -13,7 +23,7 @@ section {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  position: relative;
+  // position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -62,6 +72,7 @@ section {
 
 .card-image {
   height: 250px;
+  max-height: 250px;
 }
 
 img {
@@ -160,13 +171,24 @@ img {
     max-width: 960px;
   }
 
-  .card{
+  .card {
     flex-basis: 25%;
   }
 }
 
 /* Large devices (desktops, 992px and up) */
-@media screen and (min-width: 992px) {}
+@media screen and (min-width: 992px) {
+  .projects-intro {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-left: 75px;
+    margin-right: 75px;
+
+    p {
+      line-height: 32px;
+    }
+  }
+}
 
 /* Extra large devices (large desktops, 1200px and up) */
 @media screen and (min-width: 1200px) {}

@@ -3,8 +3,9 @@ header {
   top: 0px;
   left: 0px;
   right: 0px;
-  background: #f8f8f8;
-  border: 1px solid #cacaca;
+  // background: #f8f8f8;
+  background: #141414;
+  border: 1px solid #000;
   height: 50px;
 }
 
@@ -31,8 +32,8 @@ nav {
   display: block;
   list-style-type: none;
   margin-top: 50px;
-  background: #f8f8f8;
-  border-left: 1px solid #cacaca;
+  background: #141414;
+  border-left: 1px solid #000;
   padding-left: 0;
 
   li {
@@ -41,7 +42,7 @@ nav {
     font-size: 20px;
 
     a {
-      color: #006699;
+      color: whitesmoke;
       text-decoration: none;
     }
   }
@@ -63,9 +64,9 @@ nav {
   justify-content: space-evenly;
   list-style-type: none;
   padding-left: 0;
-  background: #f8f8f8;
-  border-left: 1px solid #cacaca;
-  border-bottom: 1px solid #cacaca;
+  background: #141414;
+  border-left: 1px solid #000;
+  border-bottom: 1px solid #000;
 
   li {
     padding-top: 0;
@@ -74,7 +75,7 @@ nav {
     padding-bottom: 20px;
 
     a {
-      color: #006699;
+      color: whitesmoke;
       text-decoration: none;
     }
   }
@@ -96,7 +97,7 @@ nav {
 .bar3 {
   width: 30px;
   height: 4px;
-  background-color: #333;
+  background-color: whitesmoke;
   margin: 6px 0;
   transition: 0.4s;
 }

@@ -20,6 +20,7 @@ section {
   min-width: 90%;
   margin-left: 25px;
   margin-right: 25px;
+  flex-wrap: nowrap;
 
   p {
     font-size: 20px;
@@ -28,11 +29,10 @@ section {
 }
 
 .profile-pic-container {
-  max-width: 360px;
   margin: 0 auto;
-  padding-left: 25px;
-  padding-right: 25px;
-  order: 0;
+  // padding-left: 25px;
+  // padding-right: 25px;
+  padding: 25px;
 
   .profile-pic {
     max-width: 100%;
@@ -45,7 +45,14 @@ section {
   margin-right: 25px;
   font-size: 20px;
   line-height: 26px;
-  order: 1;
+}
+
+.bio {
+  min-width: 90%;
+}
+
+.career {
+  order: 4
 }
 
 .hero-image {
@@ -69,6 +76,20 @@ section {
 }
 
 @media screen and (min-width: 768px) {
+  .profile-pic-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding-left: 25px;
+    padding-right: 25px;
+    order: 3;
+
+    .profile-pic {
+      max-width: 75%;
+      border-radius: 15%;
+      padding-right: 25px;
+    }
+  }
+
   .hero-image {
     min-height: 300px;
   }
@@ -90,20 +111,17 @@ section {
   }
 
   .intro {
-    margin: 0 auto;
     padding-top: 20px;
-    padding-bottom: 20px;
-
 
     p {
-      text-align: center;
       line-height: 32px;
     }
   }
 
   .profile-pic-container {
     flex: 1;
-    padding-top: 50px;
+    padding: 0;
+    text-align: center;
   }
 
   .hero-text {
@@ -112,12 +130,15 @@ section {
 
   .summary {
     flex: 1;
-    margin-right: 75px;
+    margin-right: 50px;
 
     p {
       font-size: 20px;
       line-height: 32px;
     }
+  }
+  .career {
+    order: 0
   }
 }
 

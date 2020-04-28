@@ -26,7 +26,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.13.0",
     "@fortawesome/free-regular-svg-icons": "^5.13.0",
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
-    "@scullyio/init": "0.0.23",
+    "@scullyio/init": "0.0.26",
     "@scullyio/ng-lib": "latest",
     "@scullyio/scully": "latest",
     "font-awesome": "^4.7.0",

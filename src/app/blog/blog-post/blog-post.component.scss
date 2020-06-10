@@ -1,0 +1,25 @@
+section {
+  margin-top: 50px;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+}
+
+.content-container {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+
+@media screen and (min-width: 768px) {
+  .content-container {
+    padding-bottom: 50px;
+  }
+
+}
+
+/* Large devices (desktops, 992px and up) */
+@media screen and (min-width: 992px) {}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media screen and (min-width: 1200px) {}

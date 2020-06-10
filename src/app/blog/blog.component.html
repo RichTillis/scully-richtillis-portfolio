@@ -1,0 +1,16 @@
+<section>
+  <div class="hero-image">
+    <div class="hero-text">
+      <h1>Blog</h1>
+    </div>
+  </div>
+  <div class="content-container">
+    <ul aria-label="Blog posts">
+      <li *ngFor="let blog of $blogPosts | async">
+        <a [routerLink]="blog.route">
+          {{blog.title}} by {{blog.authorName}}
+        </a>
+      </li>
+    </ul>
+  </div>
+</section>

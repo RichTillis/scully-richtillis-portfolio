@@ -1,0 +1,14 @@
+<div class="card" *ngFor="let blog of $blogPosts | async">
+  <div class="card-contents">
+    <div class="blog-image">
+      <img [src]="blog.image">
+      <p>Photo by Markus Spiske on Unsplash</p>
+    </div>
+    <div class="blog-description">
+      <h1><a [routerLink]="blog.route">
+          {{blog.title}} </a></h1>
+      <p class="publish-date">Published on {{blog.latestRevision | date: 'longDate'}}</p>
+      <p class="abstract">{{blog.abstract}}</p>
+    </div>
+  </div>
+</div>

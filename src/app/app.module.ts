@@ -11,7 +11,6 @@ import { faStackOverflow, faGithub, faMedium, faLinkedin, faTwitter, faGooglePla
 import { ProjectCardComponent } from './components/project-card/project-card.component';
 import { HeaderModule } from './components/header/header.module';
 
-
 @NgModule({
   declarations: [AppComponent, ProjectCardComponent],
   imports: [

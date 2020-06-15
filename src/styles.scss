@@ -1,6 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+/* include CSS for prism toolbar */
+@import '~prismjs/plugins/toolbar/prism-toolbar.css';
+/* check node_modules/prismjs/themes/ for the available themes */
+@import '~prismjs/themes/prism-okaidia';
+
 html body {
-    font-family: 'Open Sans', sans-serif;
-    color: #717171;
-    margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  color: #717171;
+  margin: 0;
+}
+
+p {
+  font-size: 20px;
+  line-height: 26px;
 }

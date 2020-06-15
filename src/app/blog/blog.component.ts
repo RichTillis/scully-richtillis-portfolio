@@ -12,7 +12,7 @@ declare var ng: any;
 })
 export class BlogComponent implements OnInit {
   ngOnInit() {
-    this.scully.available$.subscribe(routes => console.log(routes));
+    // this.scully.available$.subscribe(routes => console.log(routes));
   }
 
   constructor(private scully: ScullyRoutesService) {
@@ -22,7 +22,7 @@ export class BlogComponent implements OnInit {
     map(routes =>
       routes.filter(
         route =>
-          route.route.startsWith('/blog/') && route.sourceFile.endsWith('.md')
+          route.route.startsWith('/blog/') && route.sourceFile.endsWith('.md') && route.publish
       )
     )
   );

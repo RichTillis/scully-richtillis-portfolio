@@ -1,11 +1,18 @@
 <section>
-  <div class="content-container">
-    <!-- blog-post.component.html -->
-    <h1 *ngIf="$blogPostMetadata | async as blogPost">Blog Post by {{blogPost.authorName}}</h1>
-    <hr>
-    <!-- This is where Scully will inject the static HTML -->
-    <scully-content></scully-content>
-    <hr>
-    <h2>End of content</h2>
+  <div *ngIf="$blogPostMetadata | async as blogPost">
+    <div class="hero-image" [style.background-image]="'url(' + blogPost.image + ')'">
+    </div>
+    <p class="image-credit">{{blogPost.imgCredit}}</p>
+    <div class="content-container">
+      <div class="blog-body">
+        <h1 class="title">{{blogPost.title}}</h1>
+        <p class="publish-date">Author: {{blogPost.authorName }}</p>
+        <p class="publish-date">Published: {{blogPost.publishDate | date: 'longDate'}}</p>
+        <p class="publish-date">Last Revised: {{blogPost.latestRevision | date: 'longDate'}}</p>
+        <scully-content></scully-content>
+      </div>
+
+    </div>
   </div>
+
 </section>

@@ -8,7 +8,8 @@ import { Component, OnInit, Input } from '@angular/core';
 export class BlogTeaserComponent implements OnInit {
   @Input() blog: any;
   
-  constructor() { }
+  constructor() {
+   }
 
   ngOnInit(): void {
   }

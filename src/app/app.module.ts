@@ -10,11 +10,9 @@ import { faSquare as farSquare, faCheckSquare as farCheckSquare } from '@fortawe
 import { faStackOverflow, faGithub, faMedium, faLinkedin, faTwitter, faGooglePlay, faAppStoreIos } from '@fortawesome/free-brands-svg-icons';
 import { ProjectCardComponent } from './components/project-card/project-card.component';
 import { HeaderModule } from './components/header/header.module';
-import { BlogTeaserComponent } from './components/blog-teaser/blog-teaser.component';
-
 
 @NgModule({
-  declarations: [AppComponent, ProjectCardComponent, BlogTeaserComponent],
+  declarations: [AppComponent, ProjectCardComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -8,12 +8,10 @@ section {
 .hero-image {
   background-image: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)),
     url("src/assets/images/blog-index-background.jpg");
-  // background: url("src/assets/images/projects-index-background.jpg");
   min-height: 150px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  // position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -28,6 +26,7 @@ section {
 .content-container {
   max-width: 1080px;
   margin: 0 auto;
+  padding-top: 20px;
 }
 
 .blog-intro {

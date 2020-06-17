@@ -11,6 +11,7 @@ import { faStackOverflow, faGithub, faMedium, faLinkedin, faTwitter, faGooglePla
 import { ProjectCardComponent } from './components/project-card/project-card.component';
 import { HeaderModule } from './components/header/header.module';
 import { FooterModule } from './components/footer/footer.module';
+import { DisqusModule } from "ngx-disqus";
 
 @NgModule({
   declarations: [AppComponent, ProjectCardComponent],
@@ -20,7 +21,8 @@ import { FooterModule } from './components/footer/footer.module';
     ScullyLibModule,
     FontAwesomeModule,
     HeaderModule,
-    FooterModule
+    FooterModule,
+    DisqusModule.forRoot('richtillis')
   ],
   providers: [],
   bootstrap: [AppComponent]

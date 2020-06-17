@@ -10,9 +10,10 @@
         <p class="publish-date">Published: {{blogPost.publishDate | date: 'longDate'}}</p>
         <p class="publish-date">Last Revised: {{blogPost.latestRevision | date: 'longDate'}}</p>
         <scully-content></scully-content>
+        <div class="disqus">
+          <disqus [identifier]="postId"></disqus>
+        </div>
       </div>
-
     </div>
   </div>
-
 </section>

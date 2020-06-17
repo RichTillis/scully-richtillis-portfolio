@@ -1,4 +1,4 @@
-import { Component, AfterViewChecked } from '@angular/core';
+import { Component, AfterViewChecked, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ScullyRoutesService } from '@scullyio/ng-lib';
 import { combineLatest } from 'rxjs';
@@ -11,11 +11,16 @@ import { HighlightService } from '../../highlight.service';
   templateUrl: './blog-post.component.html',
   styleUrls: ['./blog-post.component.scss']
 })
-export class BlogPostComponent implements AfterViewChecked {
-  
+export class BlogPostComponent implements OnInit, AfterViewChecked {
+  postId: string;
+
   constructor(private activatedRoute: ActivatedRoute,
     private scully: ScullyRoutesService,
     private highlightService: HighlightService) { }
+
+  ngOnInit() {
+    this.postId = this.activatedRoute.snapshot.paramMap.get('postId');
+  }
 
   ngAfterViewChecked() {
     this.highlightService.highlightAll();

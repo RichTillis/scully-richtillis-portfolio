@@ -10,6 +10,7 @@ import { faSquare as farSquare, faCheckSquare as farCheckSquare } from '@fortawe
 import { faStackOverflow, faGithub, faMedium, faLinkedin, faTwitter, faGooglePlay, faAppStoreIos } from '@fortawesome/free-brands-svg-icons';
 import { ProjectCardComponent } from './components/project-card/project-card.component';
 import { HeaderModule } from './components/header/header.module';
+import { FooterModule } from './components/footer/footer.module';
 
 @NgModule({
   declarations: [AppComponent, ProjectCardComponent],
@@ -18,7 +19,8 @@ import { HeaderModule } from './components/header/header.module';
     AppRoutingModule,
     ScullyLibModule,
     FontAwesomeModule,
-    HeaderModule
+    HeaderModule,
+    FooterModule
   ],
   providers: [],
   bootstrap: [AppComponent]
@@ -26,12 +28,12 @@ import { HeaderModule } from './components/header/header.module';
 export class AppModule {
   constructor(private library: FaIconLibrary) {
     library.addIcons(
-      faSquare, 
-      faCheckSquare, 
-      farSquare, 
-      farCheckSquare, 
-      faStackOverflow, 
-      faGithub, 
+      faSquare,
+      faCheckSquare,
+      farSquare,
+      farCheckSquare,
+      faStackOverflow,
+      faGithub,
       faMedium,
       faAt,
       faLinkedin,
@@ -39,6 +41,6 @@ export class AppModule {
       faTwitter,
       faGooglePlay,
       faAppStoreIos
-      );
+    );
   }
- }
+}

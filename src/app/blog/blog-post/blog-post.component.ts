@@ -13,6 +13,7 @@ import { HighlightService } from '../../highlight.service';
 })
 export class BlogPostComponent implements OnInit, AfterViewChecked {
   postId: string;
+  backgroundImage: string;
 
   constructor(private activatedRoute: ActivatedRoute,
     private scully: ScullyRoutesService,
@@ -20,6 +21,11 @@ export class BlogPostComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this.postId = this.activatedRoute.snapshot.paramMap.get('postId');
+    this.$blogPostMetadata.subscribe(post => {
+      this.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.15)),url("` + post.image + `")`;
+      // console.log(post);
+    }
+    );
   }
 
   ngAfterViewChecked() {
@@ -34,5 +40,7 @@ export class BlogPostComponent implements OnInit, AfterViewChecked {
       routes.find(route => route.route === `/blog/${postId}`)
     )
   );
+
+
 
 }

@@ -1,18 +1,20 @@
 <section>
   <div *ngIf="$blogPostMetadata | async as blogPost">
-    <div class="hero-image" [style.background-image]="'url(' + blogPost.image + ')'">
+    <!-- <div class="hero-image" [style.background-image]="'url(' + blogPost.image + ')'"> -->
+      <div class="hero-image" [ngStyle]="{'background-image': backgroundImage}">
+      <div class="title">
+        <h1>{{blogPost.title}}</h1>
+      </div>
     </div>
-    <p class="image-credit">{{blogPost.imgCredit}}</p>
     <div class="content-container">
       <div class="blog-body">
-        <h1 class="title">{{blogPost.title}}</h1>
-        <p class="publish-date">Author: {{blogPost.authorName }}</p>
+        <p class="image-credit">{{blogPost.imgCredit}}</p>
+        <p class="author">Author: {{blogPost.authorName }}</p>
         <p class="publish-date">Published: {{blogPost.publishDate | date: 'longDate'}}</p>
         <p class="publish-date">Last Revised: {{blogPost.latestRevision | date: 'longDate'}}</p>
         <scully-content></scully-content>
-        <div class="disqus">
-          <disqus [identifier]="postId"></disqus>
-        </div>
+        <hr>
+        <disqus [identifier]="postId"></disqus>
       </div>
     </div>
   </div>

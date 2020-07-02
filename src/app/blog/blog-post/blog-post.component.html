@@ -1,7 +1,6 @@
 <section>
   <div *ngIf="$blogPostMetadata | async as blogPost">
-    <!-- <div class="hero-image" [style.background-image]="'url(' + blogPost.image + ')'"> -->
-      <div class="hero-image" [ngStyle]="{'background-image': backgroundImage}">
+    <div class="hero-image" [ngStyle]="{'background-image': backgroundImage}">
       <div class="title">
         <h1>{{blogPost.title}}</h1>
       </div>

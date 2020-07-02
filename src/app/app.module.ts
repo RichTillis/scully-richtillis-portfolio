@@ -8,9 +8,9 @@ import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontaweso
 import { faSquare, faCheckSquare, faAt } from '@fortawesome/free-solid-svg-icons';
 import { faSquare as farSquare, faCheckSquare as farCheckSquare } from '@fortawesome/free-regular-svg-icons';
 import { faStackOverflow, faGithub, faMedium, faLinkedin, faTwitter, faGooglePlay, faAppStoreIos } from '@fortawesome/free-brands-svg-icons';
-import { ProjectCardComponent } from './components/project-card/project-card.component';
-import { HeaderModule } from './components/header/header.module';
-import { FooterModule } from './components/footer/footer.module';
+import { ProjectCardComponent } from './projects/project-card/project-card.component';
+import { HeaderModule } from './header/header.module';
+import { FooterModule } from './footer/footer.module';
 import { DisqusModule } from "ngx-disqus";
 
 @NgModule({

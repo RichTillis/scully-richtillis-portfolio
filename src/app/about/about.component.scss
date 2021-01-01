@@ -104,8 +104,7 @@ p {
 // }
 
 .hero-image {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)),
-    url("src/assets/images/about-index-background.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)),  url("../../assets/images/about-index-background.jpg");
   // background: url("src/assets/images/about-index-background.jpg");
   min-height: 150px;
   background-position: center;

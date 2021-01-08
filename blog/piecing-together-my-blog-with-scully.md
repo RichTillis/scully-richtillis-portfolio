@@ -8,8 +8,11 @@ authorName: Rich Tillis
 authorTwitter: richtillis
 featured: true
 abstract: Working through the Scully fundamentals to put my blog together. No article this time. Think of this as just my Scully Hello World.
-image: assets/images/blog/scully-test.jpg
-imgCredit: Photo by Markus Spiske on Unsplash
+image: assets/images/blog/piecing-together-my-blog-with-scully.jpg
+heroImgCreatorName: Xavi Cabrera
+heroImgCreatorUrl: https://unsplash.com/@xavi_cabrera?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText
+heroImgSource: Unsplash
+heroImgSourceUrl: https://unsplash.com/s/photos/lego?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText
 keywords:
   - angular
   - ionic
@@ -33,4 +36,3 @@ $blogPosts = this.scully.available$.pipe(
     )
   );
 ```
-

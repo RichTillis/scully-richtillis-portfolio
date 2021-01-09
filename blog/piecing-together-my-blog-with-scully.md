@@ -1,5 +1,5 @@
 ---
-title: Piecing together my blog with Scully
+title: Piecing Together My Blog With Scully
 description: This is a post description
 publish: true
 publishDate: 2020-06-15

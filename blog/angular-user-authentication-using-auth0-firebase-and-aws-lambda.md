@@ -23,26 +23,15 @@ keywords:
 language: en
 ---
 
-<!-- 
-<span>Photo by <a href="https://unsplash.com/@eskandthewood?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Silvio Kundt</a> on <a href="https://unsplash.com/s/photos/pattern?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
--->
-
-<!--
-<span>Photo by <a href="https://unsplash.com/@mrsjrlopez?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Joanna Lopez</a> on <a href="https://unsplash.com/s/photos/ingredients?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
--->
-
-This post describes one way to add user login to an Angular application using Auth0 and Firebase with the help of AWS Lambda.
+**This post describes one way to add user login to an Angular application using Auth0 and Firebase with the help of AWS Lambda.**
 
 This example uses Auth0 to authenticate a user using the Auth0 Angular SDK. The app then uses the Auth0 library and user credentials to produce a JWT that authorizes access to an AWS API Gateway route. This route points to a Lambda that uses the Firebase Admin SDK along with a Firebase Admin key stored in AWS Parameter Store to mint a Firebase auth token which it returns to the Angular app. With this token the app can then authenticatie through Firebase Auth which will give it access to the Firestore data store.
 
-This example shows a way to integrate all the services together. Although it is not a complete, polished, production-ready authentication solution, it will:
+This example shows a way to integrate all the services together. Although it is not a complete, polished, production-ready authentication solution, it will show you how to:
 
 * Authenticate a user using Auth0.
-
 * Use a JWT to authorize use of AWS API Gateway.
-
 * Use AWS to store Firebase Admin keys and mint Firebase authentication tokens.
-
 * Authenticate to Firebase using an auth token.
 
 ### Prerequisites
@@ -50,9 +39,7 @@ This example shows a way to integrate all the services together. Although it is 
 Accounts to Auth0, Amazon AWS, and Firebase will be required to use their services.
 
 * Auth0 - a free account. You can sign up [here][2].
-
 * Firebase - If you already have a Google account, then the Firebase service is already available to you. You can sign in [here][5].
-
 * Amazon AWS - Information about how to sign up can be found [here][3]. The sign up process is more involved than either Auth0 or Firebase. It does require a credit card which, it you are like me, left me feeling a little uneasy. There are [ways][4] to setup billing alarms to warn you when you exceed a threshold you specify. The AWS Lambda use in this ttuorial will stay well within the free-tier limits on Lambda processing.
 
 This project was developed using Angular 11 however there is nothing specific in this tutorial that relies on features released in this version.
@@ -70,6 +57,7 @@ This tutorial will not provide you with a polished authentication architecture f
 * Authenticate into Firebase using a custom minted token
 
 Let's get started.
+***
 
 ## Getting Started
 
@@ -90,12 +78,14 @@ npm start
 This app uses Angular material, RXJS, and Observables *blah blahblah*
 
 Stop the app with **ctrl c**
+***
 
 ## Create an Auth0 Application
 
 ### Disclaimer and Credit
 
 Most of the steps described here are throughly detailed [here][1] in an article by Dan Arias at Auth0. It describes Auth0 authentication in great detail. I **highly** recommend reading it.
+***
 
 ## Integrate Auth0 into the Angular App
 

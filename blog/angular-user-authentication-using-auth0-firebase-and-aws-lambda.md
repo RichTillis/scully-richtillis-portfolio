@@ -83,6 +83,12 @@ Stop the app with **ctrl c**
 **Credit to Dan Arian at Auth0.** Most of the steps described here are throughly detailed **[here][1]** in an article by Dan Arias at Auth0. It describes Auth0 user authentication in an Angular app in great detail. I **highly** recommend reading it.
 ***
 
+![Auth0 application navigation menu ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/auth0-app-menu.jpg "Auth0 application navigation menu")
+
+![Auth0 application settings ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/auth0-app-settings.jpg "Auth0 application settings")
+
+![Auth0 create application page menu ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/auth0-create-app.jpg "Auth0 create application page menu")
+
 ## Integrate Auth0 into the Angular App
 
 First thing we want to do is update the `tsconfig.json` file and add `"resolveJsonModule": true`. This file can be found at the root of the Angular app.  This property will allow  **TODO - blah blah balh - finish this**

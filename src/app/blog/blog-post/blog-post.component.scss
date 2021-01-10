@@ -5,6 +5,19 @@ section {
   right: 0px;
 }
 
+img {
+  max-width: 90%;
+  height: auto;
+  display: block;
+  border:1px solid black;
+  box-shadow: 5px 5px 5px #999;
+}
+
+img[alt$="><"] {
+  height: auto;
+  margin: auto;
+  float: none!important;
+}
 .content-container {
   max-width: 1080px;
   margin: 0 auto;

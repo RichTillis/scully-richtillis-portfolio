@@ -46,6 +46,23 @@ ul {
   letter-spacing: 0.2px;
 }
 
+code {
+  font-size: 15px;
+  border: 1px solid#bdc4ce;
+  border-radius: 3px;
+  background-color: #eaecef;
+  padding: 1px 5px;
+}
+
+pre {
+  background-color: #011627;
+}
+
+pre>code {
+  background-color: #011627;
+  border: none;
+}
+
 .blog-body {
   margin-left: 25px;
   margin-right: 25px;

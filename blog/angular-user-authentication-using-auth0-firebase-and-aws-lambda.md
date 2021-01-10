@@ -34,13 +34,11 @@ This example shows a way to integrate all the services together. Although it is 
 * Use AWS to store Firebase Admin keys and mint Firebase authentication tokens.
 * Authenticate to Firebase using an auth token.
 
-### Prerequisites
+**There are a prerequisites before getting started.** Accounts to Auth0, Amazon AWS, and Firebase will be required to use their services.
 
-Accounts to Auth0, Amazon AWS, and Firebase will be required to use their services.
-
-* Auth0 - a free account. You can sign up [here][2].
-* Firebase - If you already have a Google account, then the Firebase service is already available to you. You can sign in [here][5].
-* Amazon AWS - Information about how to sign up can be found [here][3]. The sign up process is more involved than either Auth0 or Firebase. It does require a credit card which, it you are like me, left me feeling a little uneasy. There are [ways][4] to setup billing alarms to warn you when you exceed a threshold you specify. The AWS Lambda use in this ttuorial will stay well within the free-tier limits on Lambda processing.
+* Auth0 - a free account. You can sign up **[here][2]**.
+* Firebase - If you already have a Google account, then the Firebase service is already available to you. You can sign in **[here][5]**.
+* Amazon AWS - Information about how to sign up can be found **[here][3]**. The sign up process is more involved than either Auth0 or Firebase. It does require a credit card which, it you are like me, left me feeling a little uneasy. There are **[ways][4]** to setup billing alarms to warn you when you exceed a threshold you specify. The AWS Lambda use in this ttuorial will stay well within the free-tier limits on Lambda processing.
 
 This project was developed using Angular 11 however there is nothing specific in this tutorial that relies on features released in this version.
 
@@ -82,9 +80,7 @@ Stop the app with **ctrl c**
 
 ## Create an Auth0 Application
 
-### Disclaimer and Credit
-
-Most of the steps described here are throughly detailed [here][1] in an article by Dan Arias at Auth0. It describes Auth0 authentication in great detail. I **highly** recommend reading it.
+**Credit to Dan Arian at Auth0.** Most of the steps described here are throughly detailed **[here][1]** in an article by Dan Arias at Auth0. It describes Auth0 user authentication in an Angular app in great detail. I **highly** recommend reading it.
 ***
 
 ## Integrate Auth0 into the Angular App
@@ -158,7 +154,7 @@ Now we will add the Auth0 SDK. We can do that using Angular schematics like this
 ng add @auth0/auth0-angular
 ```
 
-With the Auth0 library now added to the project, we need to import it and initialize it in `src/app/app.module.ts'.
+With the Auth0 library now added to the project, we need to import it and initialize it in `src/app/app.module.ts`.
 
 ```ts
 // app.module.ts

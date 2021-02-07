@@ -23,82 +23,75 @@ keywords:
 language: en
 ---
 
-**This post describes one way to add user login to an Angular application using Auth0 and Firebase with the help of AWS Lambda.**
+**This post describes one way to add user authentication to an Angular application using Auth0 and Firebase with the help of AWS Lambda.**
 
-This example uses Auth0 to authenticate a user with the Auth0 Angular SDK. Once authenticated, the app can use the Auth0 Angular SDK and user credentials to produce a JWT that will authorize access to an AWS API Gateway route. This route accesses a Lambda that contains the Firebase Admin SDK, along with a Firebase Admin key (stored encrypted) from the AWS Parameter Store, to mint a Firebase auth token which it returns to the Angular app. With this token the app can then authenticate to Firebase Auth which will give it access to the Firebase Firestore data store.
+This guide creates an Angular app using Auth0 to authenticate a user. Once authenticated, the app produces an Auth0 JWT which is used to authorize access to an API in the AWS API Gateway. The API routes to a Lambda which will mint a Firebase Auth token. This token is returned to the app and used to authenticate to Firebase.
 
 ### Takeaways
 
-This example shows a way to integrate Auth0, AWS Lambda, and Google Firebase together into the authentication of an Angular app. It is not a complete, polished, production-ready authentication solution, however you will learn a way to:
+This guide shows a way to integrate Auth0, AWS Lambda, and Google Firebase together into the authentication of an Angular app. It is not a complete, polished, production-ready authentication solution, however **you will learn a way to:**
 
 * Integrate Auth0 into an Angular App
 * Create a route in API Gateway and secure it with a JWT
-* Store (encrypt) and retrieve (decrypt) a Firebase Admin key in AWS Parameter Store
+* Store (encrypt) and retrieve (decrypt) a Firebase Admin key in the AWS Parameter Store
 * Mint a Firebase auth token in an AWS Lambda
 * Authenticate into Firebase using a custom minted token
 
 ### Prerequisites
 
-Accounts to **Auth0**, **Amazon AWS**, and **Google Firebase** will be required to use their services
+* **Auth0 Account** - You can sign up **[here][2]**.
+* **Firebase Account** - You can sign up **[here][5]**.
+* **Amazon AWS Account** - Information about how to sign up can be found **[here][3]**. The sign up process is more involved than either Auth0 or Firebase. It does require a credit card which, if you are like me, left me feeling a little uneasy that I might mess something up and run up a huge AWS bill. You are not alone. There are **[ways][4]** to setup billing alarms to warn you when you exceed a threshold you specify. **This tutorial will stay well within the AWS free-tier.**
+* **Asynchronous programming**, JavaScript **Promises**, RxJS **Observables** and **Observers** are used throughout this tutorial. Familiarity with these objects and concepts will be helpful to understand how component data is being managed.
 
-* **Auth0** - a free account. You can sign up **[here][2]**.
-* **Firebase** - If you already have a Google account, then the Firebase service is already available to you. You can sign in **[here][5]**.
-* **Amazon AWS** - Information about how to sign up can be found **[here][3]**. The sign up process is more involved than either Auth0 or Firebase. It does require a credit card which, if you are like me, left me feeling a little uneasy that I might mess something up and run up a huge AWS bill. You are not alone. There are **[ways][4]** to setup billing alarms to warn you when you exceed a threshold you specify. **The AWS Lambda use in this tutorial will stay well within the free-tier on Lambda processing limits.**
-* **Angular 10+** - This project was developed using Angular 11 however there is nothing I am aware of that is specific in this tutorial that relies on features released in this version.
-* **Node 12+**
-* **Lastly** - Asynchronous programming, JavaScript Promises, RxJS Observables and Observers are used throughout this tutorial. Familiarity with these objects and concepts is probably necessary to understand how the component's data is being retrieved and changed.
+### Table of Contents
 
-### Part Breakdown of This Tutorial
-
-1. Project Setup - Clone a start angular project that has all the placeholder pieces that will be filled in to show how this integration project will work.
-2. Auth0 Setup - Create an Auth0 project
+1. Angular Setup
+2. Auth0 Setup
 3. Firebase Setup
 4. AWS Setup
-5. Boostrap All Service into the Angular App
+5. Integrate everything into the Angular app
 
-There is a bit to do. Ready? Lets get started!
+It may seem like a lot. We'll just take it piece by piece. Ready? Lets get started!
 ***
 
-## Part 1 - Project Setup
+## Part 1 - Angular Setup
 
-I created a simple Angular starter shell project that contains placeholders for the integration that will be completed throughout this tutorial. To get started, clone the starter branch of the repository with the following command from the terminal:
+I created a repo for a simple Angular starter app that contains placeholders for the integrations that we will be completing throughout this guide. To get started, clone the `starter` branch of the repository:
 
 ```bash
 git clone -b starter --single-branch https://github.com/RichTillis/ng-auth0-lambda-firebase-demo.git
 ```
 
-Next, install all the dependencies and startup the app to take a look at whats going on.
+Next, install all the dependencies and startup the app to take a look at what's going on.
 
 ```bash
 cd ng-auth0-lambda-firebase-demo/
 ```
 
 ```bash
-npm install
-```
-
-```bash
-npm start
+npm install && ng serve -o
 ```
 
 ![Angular starter app layout><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/angular-app-main-content.jpg "Angular starter app layout")
 
-This tutorial's focus is on the integration of external services into the app. No consideration was given to creating login or registration pages. Instead all this app has a single page that uses Angular Material components to create a basic 3-button layout. Here's the idea behind the flow... The app loads and renders this one page. There are 3 basic steps to this process.
+Since this guide focusses on the integration of external services, we will keep the UI simple and use this basic three-button Angular app. The idea beind the UI is that each button becomes enabled once the prior step in the authentication process is successfully completed.
 
-1. Login using Auth0. Once the user has successfully authenticated with Auth0, the AWS Lambda button will become enabled.
-2. Once Auth0 login is successful, click the AWS Lambda button to make a call to AWS Lambda to generate an auth token. Once the token is returned from AWS, the Login to Firebase button will be enabled.
-3. Once the auth token is available, click the Login to Firebase to complete the authentication process.
-4. Lastly, logout buttons replace the login buttons for Auth0 and Firebase. Auth0 logout will logout the user from both Auth0 and Firebase. The Firebase logout will only logout the user from Firebase.
+1. **Login to Auth0** button: Authenticate with Auth0
+2. **AWS Lambda (get key)** button: Call the AWS Lambda and generate the Firebase auth token
+3. **Login to Firebase** button: Login to Firebase with the atuh token to complete the authentication process
 
-The behavior in these steps has been mocked out in the app. In the app there is an auth service, `src/app/services/auth.service.ts`, has the functions stubbed out. It uses RxJS BehaviorSubjects to share the state of buttons.
+These behaviors are mocked out in the app so try it out. `src/app/services/auth.service.ts` maintains the state of the authentication progress.  **talk about rxjs here** It uses RxJS BehaviorSubjects to share the state of buttons.
 
-Stop the app with **Ctrl c** or **Control c** (depending on the machine you are using).
+Use `ctrl`+`c` keys to stop the app.
 ***
 
 ## Part 2 - Auth0 Setup
 
 > Credit to Dan Arian at Auth0.
 > Most of the steps described here are throughly detailed **[here][1]** in an article by Dan Arias at Auth0. It describes Auth0 user authentication in an Angular app in great detail. I **highly** recommend reading it.
+
+### Create the Auth0 App
 
 Log into **[Auth0][6]**. After you are logged in you will land on your account dashboard. From your dashboard, you will see a left-hand navigation menu. Click on the **Applications** menu item and then click on the **Applications** sub menu item.
 
@@ -108,7 +101,7 @@ The main content will display all of your existing appliations if you have any. 
 
 ![Auth0 create application page menu ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/auth0-create-application.jpg "Auth0 create application page")
 
-In the subsequent **Create application** modal, name your app and select the **Single Page Web Applications** application type. For this tutorial I will name the app **ng-aws-firebase-auth-app**. 
+In the subsequent **Create application** modal, name your app and select the **Single Page Web Applications** application type. For this tutorial I will name the app **ng-aws-firebase-auth-app**.
 
 Click the **Create** button to create the app.
 
@@ -121,9 +114,8 @@ Once the app is created you will be routed to that application. Click on the **S
 The last configuration update for the Auth0 app is in the **Application URIs** section (still within the application settings). Update **Allowed Callback URLs**, **Allowed Logout URLs**, and **Allowed Web Origins** with **<http://localhost:4200>**. Be aware that localhost:4200 is only being used for development. When you app make it to a production environment you will need to add the location (IP address) and port where your app is being hosted.
 
 We are done setting up the Auth0 app.
-***
 
-## Integrate Auth0 into the Angular App
+### Integrate Auth0 into the Angular App
 
 Open the Angular app. First thing we want to do is update the `src/tsconfig.json` file and add `"resolveJsonModule": true`. This property will allow us to import `.json` files into TypeScript modules.
 
@@ -290,36 +282,32 @@ export class AuthService {
 Restart the app and try out the Auth0 implementation.
 
 ```bash
-npm start
+ng serve -o
 ```
 
-## Section 2
+***
 
-## Integrate the Auth Lambda into the Angular app
+## Part 3 - Firebase Setup
 
-### Section Overview
-
-The process of creating an AWS lambda and making it available with API Gateway is well documented by AWS and can be completed in just a few clicks in the AWS console. This proess becomes more involved when we add in API authorization, an SDK, a private key, and CORS management. We will be addressing all of these pieces in this section. Here are the steps we are going to work through:
-
-1. Create a Firebase project
-2. Get the Admin key & URL from the project
-3. Store the key (encrypted) in the AWS Parameter Store
-4. Create the Node project locally
-5. Create the AWS Lambda and import the Node project
-6. Create the API Gateway API with an Authorizer and CORS management
-7. Add the Auth0 auth inteceptor and api call to the lambda
-
-As you can see there are a few pieces needed to get this piece put together. Hang with me - we can get it done.
-
-### Create the Firebase Project
-
-We need to create a Firebase project so that we can grab the project's key which will be used by the lambda. Log into [8]console.firebase.google.com. To get started with Firebase, login into console.firebase.google.com. From the main dashboard, click on **Add project**. You will be asked for a project name. After typing a name, like **angular-auth0-lambda-project**, click **continue**. The following prompt will ask you about analytics. We are not interested in analytics so toggle the radio button near the bottom and **Disable Google Analytics**. Then click **Create project**.
+We need to create a Firebase project so that we can grab the project's key which will be used by the lambda. Log into [console.firebase.google.com][8]. To get started with Firebase, login into console.firebase.google.com. From the main dashboard, click on **Add project**. You will be asked for a project name. After typing a name, like **angular-auth0-lambda-project**, click **continue**. The following prompt will ask you about analytics. We are not interested in analytics so toggle the radio button near the bottom and **Disable Google Analytics**. Then click **Create project**.
 
 Once the project is created you will be routed to the project's dashboard. We need to geneate a private key for this project. From the navigation menu on the left, click the gears next to **Project Overview** and select **Project Settings**. In the Settings page, click the **Service Accounts** tab. Near the bottom of this page click the **Generate new private key**. Firebase will provide you with a confirmation prompt. Click **Generate Key**. Save the json file somewhere safe. We will need it later. The key contents will look somthing like this:
 
 ![Firebase private key example><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/firebase-admin-private-key.jpg "Firebase private key example")
 
 We are done with Firebase for now.
+
+***
+
+## Part 4 - AWS Setup
+
+The process of creating an AWS lambda and making it available with API Gateway is well documented by AWS and can be completed in just a few clicks in the AWS console. This proess becomes more involved when we add in API authorization, an SDK, a private key, and CORS management. We will be addressing all of these pieces in this section. Here are the steps we are going to work through:
+
+1. Store the key (encrypted) in the AWS Parameter Store
+2. Create the Node project locally
+3. Create the AWS Lambda and import the Node project
+4. Create the API Gateway API with an Authorizer and CORS management
+5. Add the Auth0 auth inteceptor and api call to the lambda
 
 ### Store the Firebase Private Key in AWS Parameter Store
 
@@ -438,20 +426,6 @@ create the authorizer
 add the cors crap
 
 in the app add the auth0 interceptor
-
-In order to create a token from Firebase we need a key from the database (that does not exist and will need to be created) as well as the admin SDK to have available in the lambda in order to put it all together and output a new token. To get this section started we will be creating the Firebase database and downloading a key. We will be storing that key in Aws's Stored Parameter service. Then we need to create the lambda code which needs to include the Firebase Admin SDK. The easiest way to do this is locally creating it. We can easly import it as a zip file into AWS once it is ready to go. Once we have the lambda all set we need to make it available to the outside world. AWS API Gateway will give us that functionality. 2 important pieces related to the API. 1) manage CORS and 2) protect this api from abuse. We will deal with that and the lambda will be good to go.
-
-Make a folder. Let's call it **firebase-auth-token-function**. Move into that directory. Once in the directory initilize it as a Node project. The init command will prompt you with a list of questions related to setting up the project. All of the default values are fine.
-
-```bash
-npm init
-```
-
-Now we want to add the Firebase Admin to the package. We can do that with NPM like this:
-
-```bash
-npm install firebase-admin --save
-```
 
 ![Setup the package.json for the lambda function><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/npm-init.jpg "Screenshot of the setup for the package.json for the lambda function")
 

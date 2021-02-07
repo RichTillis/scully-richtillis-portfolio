@@ -1,12 +1,12 @@
 ---
 title: Angular User Authentication Using Auth0, Firebase, and AWS Lambda
 description: Details the basic steps required to authenticate users into an Angular application using Auth0, AWS Lambda, and Firebase. 
-publish: false
+publish: true
 publishDate: 2021-01-05
 latestRevision: 2021-01-31
 authorName: Rich Tillis
 authorTwitter: richtillis
-featured: false
+featured: true
 abstract: Within an Angular app, authenticate using Auth0, then use AWS Lambda via AWS API Gateway (Authorized using an Auth0 JWT) to mint a Firebase auth token, and authenticate into Firebase. 
 image: assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda.jpg
 heroImgCreatorName: Silvio Kundt
@@ -88,12 +88,11 @@ Use `ctrl`+`c` keys to stop the app.
 
 ## Part 2 - Auth0 Setup
 
-> Credit to Dan Arian at Auth0.
-> Most of the steps described here are throughly detailed **[here][1]** in an article by Dan Arias at Auth0. It describes Auth0 user authentication in an Angular app in great detail. I **highly** recommend reading it.
+> Dan Arias of Auth0 wrote **[The Complete Guide to Angular User Authentication with Auth0][1]** that really is the complete Auth0 guide. I learned a great deal from it and much of this section comes from Dan's writing. All credit to Dan.
 
 ### Create the Auth0 App
 
-Log into **[Auth0][6]**. After you are logged in you will land on your account dashboard. From your dashboard, you will see a left-hand navigation menu. Click on the **Applications** menu item and then click on the **Applications** sub menu item.
+Log into **[Auth0][6]**. Once logged in, you will arrive at your account dashboard. From your dashboard, click on the **Applications** sub menu item in the left-hand navigation menu.
 
 ![Auth0 application navigation menu ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/auth0-app-menu.jpg "Auth0 application navigation menu")
 
@@ -101,23 +100,19 @@ The main content will display all of your existing appliations if you have any. 
 
 ![Auth0 create application page menu ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/auth0-create-application.jpg "Auth0 create application page")
 
-In the subsequent **Create application** modal, name your app and select the **Single Page Web Applications** application type. For this tutorial I will name the app **ng-aws-firebase-auth-app**.
-
-Click the **Create** button to create the app.
+In the subsequent **Create application** modal, name your app and select the **Single Page Web Applications** application type. For this tutorial I will name the app `ng-aws-firebase-auth-app`. Click the **Create** button to create the app.
 
 ![Auth0 application settings ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/auth0-create-app.jpg "Auth0 application settings")
 
-Once the app is created you will be routed to that application. Click on the **Settings** tab. In the **Basic Information** section, copy down the **Domain** and the **Client ID** and keep them somewhere close by. You will need them shortly.
+Once the app is created you will be routed to that application. Click on the **Settings** tab. In the **Basic Information** section, copy down the **Domain** and the **Client ID** and keep them somewhere close by. We will need them shortly.
 
 ![Auth0 app settings - basic information section><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/auth0-app-settings.jpg "Auth0 app settings page. Basic information section")
 
-The last configuration update for the Auth0 app is in the **Application URIs** section (still within the application settings). Update **Allowed Callback URLs**, **Allowed Logout URLs**, and **Allowed Web Origins** with **<http://localhost:4200>**. Be aware that localhost:4200 is only being used for development. When you app make it to a production environment you will need to add the location (IP address) and port where your app is being hosted.
-
-We are done setting up the Auth0 app.
+In the **Application URIs** section, update **Allowed Callback URLs**, **Allowed Logout URLs**, and **Allowed Web Origins** with **http://localhost:4200**. Be aware that localhost:4200 is only being used for development. When you app make it to a production environment you will need to add the location (IP address) and port where your app is being hosted. Done setting up the Auth0 app.
 
 ### Integrate Auth0 into the Angular App
 
-Open the Angular app. First thing we want to do is update the `src/tsconfig.json` file and add `"resolveJsonModule": true`. This property will allow us to import `.json` files into TypeScript modules.
+Open the Angular app. First thing we want to do is update the `src/tsconfig.json` file and add `"resolveJsonModule": true`. This setting will allow us to import `.json` files into the app's TypeScript modules.
 
 ```json
 // tsconfig.json
@@ -154,7 +149,7 @@ Open the Angular app. First thing we want to do is update the `src/tsconfig.json
 }
 ```
 
-Create a file at the root of the Angular project and name it `auth0-config.json`. In this file you will use the Auth0 domain and client Id that was recorded during the Auth0 app setup.
+Create a file at the root of the Angular project and name it `auth0-config.json`. In this file you will use the Auth0 domain and client Id that we copied during the Auth0 app setup.
 
 ```json
 // auth0-config.json
@@ -181,7 +176,7 @@ export const environment = {
 };
 ```
 
-Now we will add the Auth0 SDK. From the terminal we can do that using Angular schematics like this:
+Now we will add the Auth0 SDK. From the terminal we can do that using Angular schematics:
 
 ```bash
 ng add @auth0/auth0-angular
@@ -205,7 +200,7 @@ import { environment as env } from '../environments/environment';
   imports: [
       // ... All the existing imports are here ...
 
-      // ... eager load the Auth0 module
+      // ... load the Auth0 module
       Auth0Module.forRoot({...env.auth})
       ],
   providers: [],
@@ -215,7 +210,7 @@ export class AppModule { }
 
 ```
 
-Auth0 is now bootstrapped to the app. The next step is to use it. The Auth0 SDK is going to perform all the authentication activities and report back to the Angular app with the results of the authentication attempt. We need to wire in the Auth0 library into the app's existing auth service.
+Auth0 is now bootstrapped to the app. The next step is to use it. The Auth0 SDK is going to perform all the Auth0 specific authentication activities and report back to the Angular app with the results of the authentication attempt. We want wrap this library into the app's existing auth service.
 
 Update `src/app/services/auth.service.ts` with the following changes
 
@@ -277,9 +272,7 @@ export class AuthService {
 }
 ```
 
-### Santity Check
-
-Restart the app and try out the Auth0 implementation.
+That's it. Auth0 should be wired in. Restart the app and try out the Auth0 implementation.
 
 ```bash
 ng serve -o
@@ -289,7 +282,7 @@ ng serve -o
 
 ## Part 3 - Firebase Setup
 
-We need to create a Firebase project so that we can grab the project's key which will be used by the lambda. Log into [console.firebase.google.com][8]. To get started with Firebase, login into console.firebase.google.com. From the main dashboard, click on **Add project**. You will be asked for a project name. After typing a name, like **angular-auth0-lambda-project**, click **continue**. The following prompt will ask you about analytics. We are not interested in analytics so toggle the radio button near the bottom and **Disable Google Analytics**. Then click **Create project**.
+We need to create a Firebase project so that we can grab the project's key which will be used by the lambda. To get started with Firebase, login into [console.firebase.google.com][5]. From the main dashboard, click on **Add project**. You will be asked for a project name. After typing a name, like **angular-auth0-lambda-project**, click **continue**. The following prompt will ask you about analytics. We are not interested in analytics so toggle the radio button near the bottom and **Disable Google Analytics**. Then click **Create project**.
 
 Once the project is created you will be routed to the project's dashboard. We need to geneate a private key for this project. From the navigation menu on the left, click the gears next to **Project Overview** and select **Project Settings**. In the Settings page, click the **Service Accounts** tab. Near the bottom of this page click the **Generate new private key**. Firebase will provide you with a confirmation prompt. Click **Generate Key**. Save the json file somewhere safe. We will need it later. The key contents will look somthing like this:
 

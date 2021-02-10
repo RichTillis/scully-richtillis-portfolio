@@ -60,14 +60,10 @@ It may seem like a lot. We'll just take it piece by piece. Ready? Lets get start
 I created a repo for a simple Angular starter app that contains placeholders for the integrations that we will be completing throughout this guide. To get started, clone the `starter` branch of the repository:
 
 ```bash
-git clone -b starter --single-branch https://github.com/RichTillis/ng-auth0-lambda-firebase-demo.git
+git clone -b starter --single-branch https://github.com/RichTillis/ng-auth0-lambda-firebase-demo.git && cd ng-auth0-lambda-firebase-demo/
 ```
 
 Next, install all the dependencies and startup the app to take a look at what's going on.
-
-```bash
-cd ng-auth0-lambda-firebase-demo/
-```
 
 ```bash
 npm install && ng serve -o
@@ -282,9 +278,25 @@ ng serve -o
 
 ## Part 3 - Firebase Setup
 
-We need to create a Firebase project so that we can grab the project's key which will be used by the lambda. To get started with Firebase, login into [console.firebase.google.com][5]. From the main dashboard, click on **Add project**. You will be asked for a project name. After typing a name, like **angular-auth0-lambda-project**, click **continue**. The following prompt will ask you about analytics. We are not interested in analytics so toggle the radio button near the bottom and **Disable Google Analytics**. Then click **Create project**.
+We need to create a Firebase project so that we can grab the project's key which will be used by the lambda. To get started with Firebase, login into [console.firebase.google.com][5]. From the main dashboard, click on **Add project**. 
 
-Once the project is created you will be routed to the project's dashboard. We need to geneate a private key for this project. From the navigation menu on the left, click the gears next to **Project Overview** and select **Project Settings**. In the Settings page, click the **Service Accounts** tab. Near the bottom of this page click the **Generate new private key**. Firebase will provide you with a confirmation prompt. Click **Generate Key**. Save the json file somewhere safe. We will need it later. The key contents will look somthing like this:
+![Add project screenshot><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/firebase-new-project.jpg "Add project screenshot")
+
+You will be asked for a project name. After typing a name, like **angular-auth0-lambda-project**, click **continue**.
+
+![Add project name screenshot><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/firebase-project-name.jpg "Add project name screenshot")
+
+The following prompt will ask you about analytics. We are not interested in analytics so toggle the radio button near the bottom and **Disable Google Analytics**. Then click **Create project**.
+
+Once the project is created you will be routed to the project's dashboard. We need to geneate a private key for this project. From the navigation menu on the left, click the gears next to **Project Overview** and select **Project Settings**. 
+
+![Firebase menu - project settings screenshot><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/firebase-menu.jpg "Firebase menu - project settings screenshot")
+
+In the Settings page, click the **Service Accounts** tab. Near the bottom of this page click the **Generate new private key**.
+
+![Firebase project service account screenshot><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/firebase-generate-private-key.jpg "Firebase project service account screenshot")
+
+Firebase will provide you with a confirmation prompt. Click **Generate Key**. Save the json file somewhere safe. We will need it later. The key contents will look somthing like this:
 
 ![Firebase private key example><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/firebase-admin-private-key.jpg "Firebase private key example")
 

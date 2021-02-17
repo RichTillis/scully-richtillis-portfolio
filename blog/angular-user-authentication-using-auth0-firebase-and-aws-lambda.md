@@ -468,8 +468,6 @@ create the authorizer
 
 in the app add the auth0 interceptor
 
-![Setup the package.json for the lambda function><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/npm-init.jpg "Screenshot of the setup for the package.json for the lambda function")
-
 Log into the **[AWS Console][7]**. Click on the **Services** drop down onthe upper left of the screen. Within the **Compute** list, click **Lambda**.
 
 You will be routed to your Lambda console. Click on **Create function**

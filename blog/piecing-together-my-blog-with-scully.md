@@ -8,7 +8,8 @@ authorName: Rich Tillis
 authorTwitter: richtillis
 featured: true
 abstract: Working through the Scully fundamentals to put my blog together. No article this time. Think of this as just my Scully Hello World.
-image: assets/images/blog/piecing-together-my-blog-with-scully.jpg
+image: https://res.cloudinary.com/dq8wrsecq/image/upload/v1613777093/piecing-together-my-blog-with-scully_elkia6.jpg
+imageThumbnail: https://res.cloudinary.com/dq8wrsecq/image/upload/w_300,c_scale/v1613777093/piecing-together-my-blog-with-scully_elkia6.jpg
 heroImgCreatorName: Xavi Cabrera
 heroImgCreatorUrl: https://unsplash.com/@xavi_cabrera?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText
 heroImgSource: Unsplash

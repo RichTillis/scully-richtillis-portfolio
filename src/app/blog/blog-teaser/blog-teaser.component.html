@@ -2,8 +2,12 @@
   <div class="card">
     <div class="card-contents">
       <div class="blog-image">
-        <img [src]="blog.image" [alt]="blog.imgCredit">
-        <p>Photo by Markus Spiske on Unsplash</p>
+        <img [src]="blog.imageThumbnail" [alt]="blog.imgCredit">
+        <!-- <span>Photo by 
+          <a [href]=blog.heroImgCreatorUrl target="_blank" rel="noopener" aria-label="photographer link">{{blog.heroImgCreatorName}}</a> 
+          wtf 
+          <a [href]=blog.heroImgSourceUrl target="_blank" rel="noopener" aria-label="media source link">{{blog.heroImgSource}}</a>
+        </span> -->
       </div>
       <div class="blog-description">
         <h1>

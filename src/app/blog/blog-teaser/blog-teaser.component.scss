@@ -77,6 +77,11 @@ a {
 
   .blog-image {
     max-width: 30%;
+    flex: 1;
+  }
+
+  .blog-description{
+    flex: 3;
   }
 
   .card {

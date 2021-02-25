@@ -113,7 +113,12 @@
   }
 
   .blog-image {
+    flex: 1;
     max-width: 30%;
+  }
+
+  .blog-description{
+    flex: 3;
   }
 
   .card {

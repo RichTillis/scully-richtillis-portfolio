@@ -15,6 +15,32 @@ section {
   flex-wrap: wrap;
 }
 
+.resume-container {
+  flex: 1;
+  text-align: center;
+  background-color: #575757;
+  border-radius: 50%;
+  padding-top: 8%;
+  padding-bottom: 4%;
+  margin-left: 25%;
+  margin-right: 25%;
+}
+
+.career-pic {
+  // max-width: 25%;
+  flex:1
+}
+
+.float-left-test{
+  float: left;
+}
+.career-description{
+  flex: 1;
+}
+.pdf-icon {
+  max-height: 50%;
+}
+
 .content {
   margin-left: 25px;
   margin-right: 25px;
@@ -37,7 +63,13 @@ p {
 }
 
 .bio-resume-container {
-  padding-top: 75px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+  max-width: 1080px;
+}
+
+.career-container {
   display: flex;
   flex-wrap: wrap;
   margin: 0 auto;
@@ -50,15 +82,8 @@ p {
   }
 
   p {
-    line-height: 1;
     margin-left: 30px;
     margin-top: 10px;
-  }
-}
-
-.education {
-  p {
-    line-height: 1;
   }
 }
 
@@ -118,7 +143,7 @@ p {
 // }
 
 .hero-image {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url("../../assets/images/about-index-background.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url("https://res.cloudinary.com/dq8wrsecq/image/upload/v1613865745/about-index-background_psqqf9.jpg");
   // background: url("src/assets/images/about-index-background.jpg");
   min-height: 150px;
   background-position: center;
@@ -167,13 +192,9 @@ p {
   }
 
   .resume-container {
-    flex: 1;
-    text-align: center;
-    background-color: #575757;
-    border-radius: 50%;
+    padding-top: 5%;
     margin-left: 50px;
-    padding-top: 4%;
-    padding-bottom: 4%;
+    margin-right: 0;
   }
 }
 
@@ -182,6 +203,11 @@ p {
   .content-container {
     margin-left: 75px;
     margin-right: 75px;
+  }
+
+  .bio-resume-container {
+    padding-top: 75px;
+
   }
 
   .intro {

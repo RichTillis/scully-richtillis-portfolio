@@ -47,9 +47,9 @@ This guide shows one way to integrate Auth0, AWS Lambda, and Google Firebase tog
 
 ### Guide Breakdown by Part
 
-* **Part 1** - **(YOU ARE HERE)** Setup of the Angular App and setup & integrate Auth0 into the Angular app.
-* **Part 2** - Setup & integration of Firebase into the Angular App.
-* **Part 3** - Setup of AWS API Gateway & Lambda to use by the Angular app.
+* **Part 1** - **(YOU ARE HERE)** Setup of the Angular App and setup & integrate Auth0 into it.
+* **Part 2** - Setup & integration of Firebase into the App.
+* **Part 3** - Setup of AWS API Gateway & Lambda to use by the app.
 
 Let's get started!
 
@@ -60,7 +60,11 @@ Let's get started!
 I created a repo for a simple Angular starter app that contains placeholders for the integrations that we will be completing throughout this guide. To get started, clone the `starter` branch of the repository:
 
 ```bash
-git clone -b starter --single-branch https://github.com/RichTillis/ng-auth0-lambda-firebase-demo.git && cd ng-auth0-lambda-firebase-demo/
+git clone -b starter --single-branch https://github.com/RichTillis/ng-auth0-lambda-firebase-demo.git
+```
+
+```bash
+cd ng-auth0-lambda-firebase-demo/
 ```
 
 Next, install all the dependencies and startup the app to take a look at what's going on.
@@ -216,7 +220,7 @@ Update `src/app/services/auth.service.ts` with the following changes
 // auth.service.ts
 
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 // add this
 import { AuthService as Auth0Service } from '@auth0/auth0-angular';

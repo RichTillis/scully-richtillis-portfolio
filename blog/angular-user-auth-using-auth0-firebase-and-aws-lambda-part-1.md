@@ -3,7 +3,7 @@ title: Angular User Auth Using Auth0, Firebase, & AWS Lambda (Part 1)
 description: Details the basic steps required to authenticate users into an Angular application using Auth0, AWS Lambda, and Firebase. 
 publish: true
 publishDate: 2021-04-13
-latestRevision: 2021-04-13
+latestRevision: 2021-05-18
 authorName: Rich Tillis
 authorTwitter: richtillis
 featured: true
@@ -26,8 +26,6 @@ language: en
 
 **This series of posts describes one way to add user authentication to an Angular application using Auth0 and Firebase with the help of AWS Lambda.**
 
-This guide is broken into three parts. It will create an Angular app using Auth0 to authenticate a user. Once authenticated, the app produces an Auth0 JWT which is used to authorize access to an API in the AWS API Gateway. The API routes to a Lambda which will mint a Firebase Auth token. This token is returned to the app and used to authenticate to Firebase.
-
 ### Overall Takeaways
 
 This guide shows one way to integrate Auth0, AWS Lambda, and Google Firebase together into the authentication of an Angular app. It is not a complete, polished, production-ready authentication solution, however **you will learn a way to:**
@@ -45,7 +43,7 @@ This guide shows one way to integrate Auth0, AWS Lambda, and Google Firebase tog
 * **Amazon AWS Account** - Information about how to sign up can be found **[here][3]**. The sign up process is more involved than either Auth0 or Firebase. It does require a credit card which, if you are like me, left me feeling a little uneasy that I might mess something up and run up a huge AWS bill. You are not alone. There are **[ways][4]** to setup billing alarms to warn you when you exceed a threshold you specify. **This tutorial will stay well within the AWS free-tier.**
 * **Asynchronous programming**, JavaScript **Promises**, RxJS **Observables** and **Observers** are used throughout this tutorial. Familiarity with these objects and concepts will help you understand how component data is being managed.
 
-### Guide Breakdown by Part
+### Guide Overview
 
 * **Part 1** - **(YOU ARE HERE)** Setup of the Angular App and setup & integrate Auth0 into it.
 * **Part 2** - Setup & integration of Firebase into the App.
@@ -89,6 +87,8 @@ Use `ctrl`+`c` keys to stop the app.
 ## Auth0 App Setup & Integration into the Angular App
 
 > Dan Arias of Auth0 wrote **[The Complete Guide to Angular User Authentication with Auth0][1]** that really is the complete Auth0 guide. I learned a great deal from it and much of this section comes from Dan's writing. All credit to Dan.
+>
+>**Additionally**, NG-Conf & the Auth0 Dev Rel team posted has a great walkthrough guide called [Authentication & Authorization in Angular with Auth0][10] on YouTube
 
 ### Create the Auth0 App
 
@@ -219,7 +219,9 @@ Update `src/app/services/auth.service.ts` with the following changes
 ```ts
 // auth.service.ts
 
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
+//add this import
+import { DOCUMENT } from '@angular/common';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 // add this
@@ -242,7 +244,7 @@ export class AuthService {
   readonly isFirebaseAuthenticated$: Observable<boolean> = this.firebaseAuthenticated$.asObservable();
 
   // update the constructor
-  constructor(private auth0Service: Auth0Service) { }
+  constructor(private auth0Service: Auth0Service, @Inject(DOCUMENT) private doc: Document) { }
 
   // update this method
   loginToAuth0(): Observable<void> {
@@ -251,7 +253,7 @@ export class AuthService {
 
   // add this method
   private logoutOfAuth0() {
-    this.auth0Service.logout();
+    this.auth0Service.logout({ returnTo: this.doc.location.origin });
   }
 
   // update this method
@@ -412,3 +414,5 @@ In this post, we setup our Angular app, as well as an Auth0 application, and int
 [7]: https://console.aws.amazon.com "AWS console"
 
 [9]: https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html "AWS Parameter Store Documentation"
+
+[10]: https://www.youtube.com/watch?v=laLIsXg2OxM "Authentication & Authorization in Angular with Auth0"

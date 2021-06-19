@@ -27,9 +27,7 @@ language: en
 
 Express is a [Fast, unopinionated, minimalist web framework for Node.js][1]. There are many problems that Express can solve. This guide addresses one of them: setting up a bare-bones HTTP server to run locally.
 
-### TL;DR
-
-Clone or fork the **[repo][3]**. Install and run direction are in the readme.
+**TL;DR** - Grab the code from the **[repo][3]**.
 
 ### Prerequisites
 
@@ -102,7 +100,7 @@ Open your brower to [http://localhost:3000][6]. You should see the message "Hell
 
 ## Wrap-up
 
-This guide sets up a bare-bones local http server. It's a great tool to test client-side API requests, create and test server-side processing of serverless functions, and test those responses once they return to your app.
+This guide sets up a bare-bones local http server. It's a great tool to test client-side API requests, create and test behaviors of future serverless functions, and test those responses once they return to your app.
 
 ### References
 

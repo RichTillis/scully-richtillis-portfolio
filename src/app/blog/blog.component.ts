@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router, ROUTES } from '@angular/router';
-import { ScullyRoutesService } from '@scullyio/ng-lib';
+import { ScullyRoute, ScullyRoutesService } from '@scullyio/ng-lib';
 import { map } from 'rxjs/operators';
 
 declare var ng: any;
@@ -24,6 +24,13 @@ export class BlogComponent implements OnInit {
         route =>
           route.route.startsWith('/blog/') && route.sourceFile.endsWith('.md') && route.publish
       )
-    )
+    ),
+    //Sort the array of filtered routes in descending order *before* passing it to the
+    //async pipe in the html code
+    map((filteredRoutes: ScullyRoute[]) => {
+      return filteredRoutes.sort((postA: ScullyRoute, postB: ScullyRoute) => {
+        return ((+new Date(postB['latestRevision'])) - (+new Date(postA['latestRevision'])));
+      });
+    }),
   );
 }

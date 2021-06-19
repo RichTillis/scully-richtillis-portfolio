@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, ROUTES } from '@angular/router';
-import { ScullyRoutesService } from '@scullyio/ng-lib';
+import { ScullyRoute, ScullyRoutesService } from '@scullyio/ng-lib';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -17,11 +17,18 @@ export class HighlightBlogComponent implements OnInit {
   }
 
   $blogPosts = this.scully.available$.pipe(
-    map(routes =>
+    map((routes: ScullyRoute[]) =>
       routes.filter(
         route =>
           route.route.startsWith('/blog/') && route.sourceFile.endsWith('.md') && route.featured
       )
-    )
+    ),
+    //Sort the array of filtered routes in descending order *before* passing it to the
+    //async pipe in the html code
+    map((filteredRoutes: ScullyRoute[]) => {
+      return filteredRoutes.sort((postA: ScullyRoute, postB: ScullyRoute) => {
+        return ((+new Date(postB['latestRevision'])) - (+new Date(postA['latestRevision'])));
+      });
+    }),
   );
 }

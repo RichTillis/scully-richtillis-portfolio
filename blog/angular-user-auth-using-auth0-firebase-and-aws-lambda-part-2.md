@@ -1,13 +1,13 @@
 ---
-title: Angular User Auth Using Auth0, Firebase, & AWS Lambda (Part 2)
+title: Auth0, Firebase, & AWS Lambda User Auth (Part 2)
 description: Details the basic steps required to authenticate users into an Angular application using Auth0, AWS Lambda, and Firebase. 
-publish: false
-publishDate: 2021-04-13
-latestRevision: 2021-06-06
+publish: true
+publishDate: 2021-07-05
+latestRevision: 2021-07-05
 authorName: Rich Tillis
 authorTwitter: richtillis
-featured: false
-abstract: (Part 2) Authenticate using Auth0 from an Angular App. Then utilize AWS Lambda via AWS API Gateway (Authorized using an Auth0 JWT) to mint a Firebase auth token and authenticate into Firebase. 
+featured: true
+abstract: Auth using Auth0. Then mint a token with AWS Lambda, via AWS API Gateway (using Auth0 JWT), and use it to authenticate to Firebase.
 image: https://res.cloudinary.com/dq8wrsecq/image/upload/v1613866571/angular-user-authentication-using-auth0-firebase-and-aws-lambda_x9zmhn.jpg
 imageThumbnail: https://res.cloudinary.com/dq8wrsecq/image/upload/w_300,h_200/v1613866571/angular-user-authentication-using-auth0-firebase-and-aws-lambda_x9zmhn.jpg
 heroImgCreatorName: Silvio Kundt
@@ -39,12 +39,14 @@ This guide shows one way to integrate Auth0, AWS Lambda, and Google Firebase tog
 ### Guide Overview
 
 * **Part 1** - Setup of the Angular App and setup & integrate Auth0 into it.
-* **Part 2** - **(YOU ARE HERE)** Setup & integration of Firebase into the App.
+* **Part 2** - **(YOU ARE HERE)** Setup & integration of Firebase into the app.
 * **Part 3** - Setup of AWS API Gateway & Lambda to use by the app.
 
 ### Prerequisites
 
-This is a continuation guide so **[Part 1][1]** needs to be completed before getting started with this guide. If you want to skip the part 1 guide, below is a branch to clone that will get you almost all the way caught up.
+First, you will need a local Express server to act as the AWS Lambda. I have a guide you can follow [here][3].
+
+Second, this guide is a continuation, so **[Part 1][1]** needs to be completed before getting started with this guide. If you want to skip the part 1 guide, below is a branch to clone that will get you almost all the way caught up.
 
 ```bash
 git clone -b part2 --single-branch https://github.com/RichTillis/ng-auth0-lambda-firebase-demo.git
@@ -88,7 +90,7 @@ Finally, once you have authenticated using Auth0, your Auth0 user name will be d
 
 ![Auth0 Successful login ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/auth0-login-success.jpg "Auth0 Successful login")
 
-We are now ready to integrate Firebase into the app. Let's get started!
+`ctrl c` to stop the app. We are now ready to integrate Firebase into the app. Let's get started!
 
 ***
 
@@ -118,7 +120,7 @@ Next you will be prompted to add a nickname to your app. This is an internal nam
 
 Once registered, a set of scripts will be presented. We only need part of these scripts. Copy the `firebaseConfig` object and save it locally as we will need it shortly. Once copied, click the **Continue to console** button.
 
-![Firebase api config ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/firebase-api-config.jpg "Firebase api config")
+![Firebase api config ><][4]
 
 The Firebase project and app are set up. That is all we need from Firebase for now.
 
@@ -138,13 +140,13 @@ export const environment = {
     redirectUri: window.location.origin,
   },
   firebaseConfig : {
-    apiKey: "AIzaSyAfPSIIC5wcW-qTGERikwM3NnJ0iBn1-nc",
+    apiKey: "AbCdEfGhIjKlMnOpQ-qwertyuiopASDFGHJK-zz",
     authDomain: "angular-auth0-lambda-project.firebaseapp.com",
     projectId: "angular-auth0-lambda-project",
     storageBucket: "angular-auth0-lambda-project.appspot.com",
-    messagingSenderId: "868144339097",
-    appId: "1:868144339097:web:b8333acd2bb1f3ac298008",
-    measurementId: "G-XPKTJCRM0S"
+    messagingSenderId: "123456789012",
+    appId: "1:123456789012:web:abc123def456ghi789jklm",
+    measurementId: "G-ABCDEFGHIJ"
   }
 };
 ```
@@ -155,7 +157,7 @@ Now we need to install and import firebase-focused libraries. We will install An
 ng add @angular/fire
 ```
 
-During the install of Firebase you will be prompted by Google to sign in and authorize an account to connect the Firebase CLI to. Once logged in you will be provided a code that you need to paste into the terminal.
+During the install of Firebase you may be prompted by Google to sign in and authorize an account to connect the Firebase CLI to. Once logged in you will be provided a code that you need to paste into the terminal.
 
 ![Google Authorization of Firebase CLI ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/google-authorization.jpg "Google Authorization of Firebase CLI")
 
@@ -207,8 +209,382 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 export class AppModule { }
 ```
 
-That is it. Firebase is integrated into the app. So how do we test it and make sure we can successfully authenticate to Firebase? We will address that in the next section.
+That is it. Firebase is now integrated into the app. So how do we test it and make sure we can successfully authenticate to Firebase? We will address that in the next section.
+
+## Create a Firebase token locally using an Express server
+
+As mentioned in the beginning of this post we will be working with a local Express server during this section. All of the next steps relate to that app so navigate to it on you filesystem.
+
+We want to test out our Firebase integration and try to login using a token. There are a couple of things we need to move forward. First we need the Firebase Admin SDK, Second, we need a key to provide to the SDK to create the token, and lastly, we need a server to host the SDK that the app can communicate with and request the token. In part 3 we will utilize AWS services for these needs but for now we will use a local Express server to test this whole process.
+
+Step 1, set up the SDK onto a local Express server. In the terminal, navigate to the root of the server. Once there, install the sdk from NPM
+
+```bash
+npm install firebase-admin --save
+```
+
+Step 2, we need to get a Firebase key from Firebase. Log into your Firebase account (https://console.firebase.google.com) and select your project. Once in the project, click on the gear next to **Project Overview** and select **Project settings**
+
+![Firebase Project Settings ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/firebase-project-settings.jpg "Firebase Project Settings")
+
+Click on the **Service Accounts** tab which displays options related to Firebase features of the project. Click the **Generate new private key**.
+
+![Firebase Generate Private Key ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/firebase-generate-private-key.jpg "Firebase Generate Private Key")
+
+A modal will popup confirming that you want to generate a new private key. The warning is in red for a reason. Store this file somewhere safe and never in a public repository. Click **Generate key**. Save the key anywhere that makes sense to you. We will need it shortly.
+
+![Firebase Generate Private Key Warning ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/firebase-private-key-warning.jpg "Firebase Generate Private Key Warning")
+
+> **Your Firebase Admin private key gives access to your project's Firebase services. Keep it confidential and never store it in a public repository.**
+
+Jump back to your local Express server. Open `index.js` (or whatever you named your main file) and update it like this:
+
+```js
+//index.js
+const express = require('express');
+const cors = require('cors');
+const firebaseAdmin = require('firebase-admin');
+
+const firebaseAdminPrivateKey = {
+    "type": "service_account",
+    "project_id": "angular-auth0-lambda-project",
+    "private_key_id": "abcd1234abcd1234abcd1234abcd1234abcd1234",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nabcdefghijklmnopqrstuvwxyz0123456789...blah...blah...blah...blah...abcdefghijklmnopqrstuvwxyz0123456789=\n-----END PRIVATE KEY-----\n",
+    "client_email": "firebase-adminsdk-abcdefg@angular-auth0-lambda-project.iam.gserviceaccount.com",
+    "client_id": "123456789012345678900",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-abcdefg%40angular-auth0-lambda-project.iam.gserviceaccount.com"
+}
+
+const app = express();
+
+app.use(cors());
+
+firebaseAdmin.initializeApp({
+    credential: firebaseAdmin.credential.cert(firebaseAdminPrivateKey)
+});
+
+app.get('/auth', (req, res) => {
+
+    // Create UID from authenticated Auth0 user
+    const uid = req.query.uid;
+
+    // Mint token using Firebase Admin SDK
+    firebaseAdmin.auth().createCustomToken(uid)
+        .then(customToken =>
+
+            // Response must be an object or Firebase errors
+            res.json({
+                firebaseToken: customToken
+            })
+        )
+        .catch(err =>
+            res.status(500).send({
+                message: 'Something went wrong acquiring a Firebase token.',
+                error: err
+            })
+        );
+});
+
+app.get('/', function (req, res) {
+    res.send('Hello World. CORS-enabled web server listening on port 3000')
+});
+
+app.use(function (req, res, next) {
+    res.status(404).send("Sorry, that route doesn't exist");
+});
+
+app.listen(3000);
+```
+
+Here's a short overview of what's going on in the code. In the first three lines we are importing Express, cors, and the firebase-admin sdk. Then we are including the firebase admin private key into the server code. Remember this is not a long-term solution and **this code should NOT be checked into any repository.** In the next couple lines we are setting up express, cors and initializing firebase admin where we are using the private key. The next block of code is defining the `/auth` route. In this route we are using the firebase sdk to generate a custom token. The route is expecting a unique id as an included parameter in the api call. The last few lines add another route, configuration for an undefined route and finally a port to listen to.
+
+In a seperate terminal start the server.
+
+```bash
+node index.js
+```
+
+To verify it is up and running, open a browser tab and navigate to [http://localhost:3000/](http://localhost:3000/). You should see the message "**Hello World. CORS-enabled web server listening on port 3000**".
+
+All right, the server is all set up and ready to mint tokens! Next step is to update the `auth.service.ts` in our app to communicate with this server and then use the response to authenticate with Firebase.
+
+## Minting Tokens and Authenticating to Firebase
+
+With the server up and running, head back to to the Angular app. Let's update the `getTokenFromLambda` function in `auth.service.ts`.
+
+```ts
+//auth.service.ts
+
+// ... existing imports
+import { HttpClient, HttpParams } from '@angular/common/http';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+
+  // ... existing property declarations 
+
+  //add these properties
+  private firebaseTokenSubject$: BehaviorSubject<string | undefined> = new BehaviorSubject<string | undefined>(undefined);
+  readonly firebaseToken$: Observable<any> = this.firebaseTokenSubject$.asObservable();
+
+  //update the constructor
+    constructor(private auth0Service: Auth0Service, @Inject(DOCUMENT) private doc: Document, private http: HttpClient) { }
+
+  // ... existing functions
+
+  //update this function
+  getTokenFromLambda() {
+    const URL = "http://localhost:3000/auth";
+
+    this.auth0Service.user$.subscribe(user => {
+      const auth0Uid = user?.sub!;
+
+      const params = new HttpParams().append('uid', auth0Uid!);
+      this.http.get<any>(URL, { params }).subscribe((token: any) => {
+        this.firebaseTokenSubject$.next(token.firebaseToken);
+        this.awsLambdaAuthTokenGenerated$.next(true);
+      });
+    });
+
+  }
+```
+
+We added imports from `@angular/common/http` so we need to add that library to `app.module.ts`.
+
+```ts
+//app.module.ts
+
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+//add this
+import { HttpClientModule } from '@angular/common/http';
+
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { IconLogoComponent } from './icon-logo/icon-logo.component'
+
+import { AuthModule as Auth0Module } from '@auth0/auth0-angular';
+import { environment as env } from '../environments/environment';
+
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    IconLogoComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,  //add this
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatButtonModule,
+    MatGridListModule,
+    Auth0Module.forRoot({...env.auth}),
+    AngularFireModule.initializeApp(env.firebaseConfig),
+    AngularFireAuthModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+Now let's update `app.component.ts` and add a property that uses `firebaseToken$`.
+
+```ts
+//app.component.ts
+
+//nothing above changes ...
+export class AppComponent {
+  // keep all the existing declarations
+
+  //add this
+  firebaseToken$: Observable<any> = this.authService.firebaseToken$;
+
+```
+
+Now update `app.component.html` with a little visual reassurance that the token was created.
+
+```html
+<!-- app.component.html -->
+
+<!-- update the last mat-grid-list -->
+    <mat-grid-list cols="3" rowHeight="4:1">
+
+      <mat-grid-tile *ngIf="auth0User$ | async as user">
+
+        <mat-card>
+          <mat-card-content>
+            <div>
+              Auth0 User Name:<br />
+              {{ user.name }}
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile *ngIf="firebaseToken$ | async as token">
+        <mat-card>
+          <mat-card-content>
+            <div>
+              Firebase Auth Token:<br>
+              <p id="firebase-token">{{ token! }}</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+      
+    </mat-grid-list>
+```
+
+The token is a large string. So instead of trying to display the whole thing, let's just display the first few characters. To do that we need add a little CSS to `app.component.scss`.
+
+```scss
+// app.component.scss
+
+//add this to the bottom of the file
+#firebase-token{
+  overflow: hidden;
+  max-width: 24ch;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+```
+
+Ok, moment of truth. Let's see if we can request and receive a token. Make sure the Express server is still running.
+
+```bash
+ng serve -o
+```
+
+If all went well you should be able to generate a token by clicking the **AWS Lambda (get key)**.
+
+![Firebase token created from local server ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/firebase-local-token-success.jpg "Firebase token created from local server")
+
+The last step in this guide is to now take that token and use it to authenticate to Firebase. To do that we need to head back over to `auth.service.ts` and update the `loginToFirebase()` function.
+
+```ts
+//auth.service.ts
+
+// ... existing imports
+import { AngularFireAuth } from '@angular/fire/auth';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthService {
+
+  // ... existing property declarations 
+
+  //add these properties
+  private firebaseUserIdSubject$: BehaviorSubject<string | undefined> = new BehaviorSubject<string | undefined>(undefined);
+  readonly firebaseUserId$: Observable<string | undefined> = this.firebaseUserIdSubject$.asObservable();
+
+  //update the constructor
+  constructor(private auth0Service: Auth0Service, @Inject(DOCUMENT) private doc: Document, private http: HttpClient, private afAuth: AngularFireAuth) { }
+
+  // ... existing functions
+
+  //update this function
+  loginToFirebase() {
+    this.firebaseToken$.subscribe(token => {
+      this.afAuth.signInWithCustomToken(token!).then(firebaseUser => {
+        this.firebaseUserIdSubject$.next(firebaseUser.user?.uid);
+        this.firebaseAuthenticated$.next(true);
+      });
+    });
+  }
+```
+
+Now let's update `app.component.ts` and add a property that uses `firebaseToken$`.
+
+```ts
+//app.component.ts
+
+//nothing above changes ...
+export class AppComponent {
+  // keep all the existing declarations
+
+  //add this
+  firebaseUserId$: Observable<string | undefined> = this.authService.firebaseUserId$;
+
+```
+
+Next let's add a visual indicator to show the Firebase user id in `app.component.ts`.
+
+```html
+<!-- app.component.html -->
+
+<!-- update the last mat-grid-list -->
+    <mat-grid-list cols="3" rowHeight="4:1">
+
+      <mat-grid-tile *ngIf="auth0User$ | async as user">
+
+        <mat-card>
+          <mat-card-content>
+            <div>
+              Auth0 User Name:<br />
+              {{ user.name }}
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile *ngIf="firebaseToken$ | async as token">
+        <mat-card>
+          <mat-card-content>
+            <div>
+              Firebase Auth Token:<br>
+              <p id="firebase-token">{{ token! }}</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+      </mat-grid-tile>
+
+      <mat-grid-tile *ngIf="firebaseUserId$ | async as firebaseUser">
+        <mat-card>
+          <mat-card-content>
+            <div>
+              Firebase User Id:<br />
+              {{ firebaseUser }}
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+      </mat-grid-tile>
+      
+    </mat-grid-list>
+```
+
+Let's see if it worked. Restart the app if its not yet running and click thru all of it and hopefully you get a Firebase User Id back. You will notice that the user id begins with **auth0|...** and that is because we use the Auth0 UID as the UID when we requested the token from the Express server.
+
+![Firebase local login success ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/firebase-local-login-success.jpg "Firebase local login success")
+
+**Congrats - Part 1 is complete!!**
+
+***
+
+## Wrap-up
+
+In this post, we setup our Firebase project and integrated it into the Angular app. We also setup a local Express server to test our code that created Firebase auth tokens. Finally we wired everything together to create a complete login process. In part 3 of this guide we will take the work we did setting up the Express server and migrate it to AWS lamba. Stay Tuned!
 
 [1]: https://www.richtillis.com/blog/angular-user-auth-using-auth0-firebase-and-aws-lambda-part-1 "Angular User Auth Using Auth0, Firebase, & AWS Lambda (Part 1)"
 
 [2]: https://firebase.google.com/ "Firebase Console"
+
+[3]: https://www.richtillis.com/blog/simple-local-node-server-setup "Setting up a simple local HTTP server with Express"
+
+[4]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625422836/ng-aws-fb-blog/firebase-api-config_rsda9w.jpg "Firebase api config"

@@ -1,13 +1,13 @@
 ---
-title: Angular User Auth Using Auth0, Firebase, & AWS Lambda (Part 1)
+title: Auth0, Firebase, & AWS Lambda User Auth (Part 1)
 description: Details the basic steps required to authenticate users into an Angular application using Auth0, AWS Lambda, and Firebase. 
 publish: true
 publishDate: 2021-04-13
-latestRevision: 2021-05-18
+latestRevision: 2021-07-04
 authorName: Rich Tillis
 authorTwitter: richtillis
 featured: true
-abstract: (Part 1) Authenticate using Auth0 from an Angular App. Then utilize AWS Lambda via AWS API Gateway (Authorized using an Auth0 JWT) to mint a Firebase auth token and authenticate into Firebase. 
+abstract: Auth using Auth0. Then mint a token with AWS Lambda, via AWS API Gateway (using Auth0 JWT), and use it to authenticate to Firebase.
 image: https://res.cloudinary.com/dq8wrsecq/image/upload/v1613866571/angular-user-authentication-using-auth0-firebase-and-aws-lambda_x9zmhn.jpg
 imageThumbnail: https://res.cloudinary.com/dq8wrsecq/image/upload/w_300,h_200/v1613866571/angular-user-authentication-using-auth0-firebase-and-aws-lambda_x9zmhn.jpg
 heroImgCreatorName: Silvio Kundt

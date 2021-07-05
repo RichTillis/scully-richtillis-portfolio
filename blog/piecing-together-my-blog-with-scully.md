@@ -6,7 +6,7 @@ publishDate: 2020-06-15
 latestRevision: 2020-06-15
 authorName: Rich Tillis
 authorTwitter: richtillis
-featured: true
+featured: false
 abstract: Working through the Scully fundamentals to put my blog together. No article this time. Think of this as just my Scully Hello World.
 image: https://res.cloudinary.com/dq8wrsecq/image/upload/v1613777093/piecing-together-my-blog-with-scully_elkia6.jpg
 imageThumbnail: https://res.cloudinary.com/dq8wrsecq/image/upload/w_300,h_200/v1613777093/piecing-together-my-blog-with-scully_elkia6.jpg

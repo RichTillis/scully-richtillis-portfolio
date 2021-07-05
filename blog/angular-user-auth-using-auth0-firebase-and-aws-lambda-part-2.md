@@ -573,7 +573,7 @@ Let's see if it worked. Restart the app if its not yet running and click thru al
 
 ![Firebase local login success ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/firebase-local-login-success.jpg "Firebase local login success")
 
-**Congrats - Part 1 is complete!!**
+**Congrats - Part 2 is complete!!**
 
 ***
 

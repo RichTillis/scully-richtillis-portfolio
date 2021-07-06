@@ -71,7 +71,7 @@ Next, install all the dependencies and startup the app to take a look at what's 
 npm install && ng serve -o
 ```
 
-![Angular starter app layout><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/angular-app-main-content.jpg "Angular starter app layout")
+![Angular starter app layout><][11]
 
 This guide focuses on the integration of external services so we will keep the UI simple and use this basic three-button Angular app. The idea beind the UI is that each button becomes enabled once the prior step in the authentication process is successfully completed.
 
@@ -94,19 +94,19 @@ Use `ctrl`+`c` keys to stop the app.
 
 Log into **[Auth0][6]**. Once logged in, you will arrive at your account dashboard. From your dashboard, click on the **Applications** sub menu item in the left-hand navigation menu.
 
-![Auth0 application navigation menu ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/auth0-app-menu.jpg "Auth0 application navigation menu")
+![Auth0 application navigation menu ><][12]
 
 The main content will display all of your existing appliations if you have any. Click on the **Create Application** button.
 
-![Auth0 create application page menu ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/auth0-create-application.jpg "Auth0 create application page")
+![Auth0 create application page menu ><][13]
 
 In the subsequent **Create application** modal, name your app and select the **Single Page Web Applications** application type. For this tutorial I will name the app `ng-aws-firebase-auth-app`. Click the **Create** button to create the app.
 
-![Auth0 application settings ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/auth0-create-app.jpg "Auth0 application settings")
+![Auth0 application settings ><][14]
 
 Once the app is created you will be routed to that application. Click on the **Settings** tab. In the **Basic Information** section, copy down the **Domain** and the **Client ID** and keep them somewhere close by. We will need them shortly.
 
-![Auth0 app settings - basic information section><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/auth0-app-settings.jpg "Auth0 app settings page. Basic information section")
+![Auth0 app settings - basic information section><][15]
 
 In the **Application URIs** section, update **Allowed Callback URLs**, **Allowed Logout URLs**, and **Allowed Web Origins** with **http://localhost:4200**. Be aware that localhost:4200 is only being used for development. When you app make it to a production environment you will need to add the location (IP address) and port where your app is being hosted. Click the **Save Changes** button at the bottom of the page.
 
@@ -385,11 +385,11 @@ ng serve -o
 
 If everything went as planned, once you click on the **Login to Auth0** button, an Auth0 modal will pop-up requesting login.
 
-![Auth0 Login Screen ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/auth0-login-screenshot.jpg "Auth0 Login Screen")
+![Auth0 Login Screen ><][16]
 
 Finally, once you have authenticated using Auth0, your Auth0 user name will be displayed under the **Logout of Auth0** button.
 
-![Auth0 Successful login ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/auth0-login-success.jpg "Auth0 Successful login")
+![Auth0 Successful login ><][17]
 
 **Congrats - Part 1 is complete!!**
 
@@ -416,3 +416,17 @@ In this post, we setup our Angular app, as well as an Auth0 application, and int
 [9]: https://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-parameter-store.html "AWS Parameter Store Documentation"
 
 [10]: https://www.youtube.com/watch?v=laLIsXg2OxM "Authentication & Authorization in Angular with Auth0"
+
+[11]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625528941/ng-aws-fb-blog/angular-app-main-content_ylvctl.jpg "Angular starter app layout"
+
+[12]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625528941/ng-aws-fb-blog/auth0-app-menu_wn7mgs.jpg "Auth0 application navigation menu"
+
+[13]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625528940/ng-aws-fb-blog/auth0-create-application_aljsmf.jpg "Auth0 create application page"
+
+[14]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625528940/ng-aws-fb-blog/auth0-create-app_wvsmtl.jpg "Auth0 application settings"
+
+[15]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625528940/ng-aws-fb-blog/auth0-app-settings_n5qtgv.jpg "Auth0 app settings page. Basic information section"
+
+[16]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625528940/ng-aws-fb-blog/auth0-login-screenshot_viuqkb.jpg "Auth0 Login Screen"
+
+[17]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625528940/ng-aws-fb-blog/auth0-login-success_jnhcfz.jpg "Auth0 Successful login"

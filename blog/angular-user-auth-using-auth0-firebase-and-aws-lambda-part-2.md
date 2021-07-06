@@ -72,7 +72,7 @@ Next, install all the dependencies and startup the app so we can take a look at 
 npm install && ng serve -o
 ```
 
-![Angular starter app layout><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/angular-app-main-content.jpg "Angular starter app layout")
+![Angular starter app layout><][5]
 
 This guide focuses on the integration of external services so we will keep the UI simple and use this basic three-button Angular app. The idea beind the UI is that each button becomes enabled once the prior step in the authentication process is successfully completed.
 
@@ -84,11 +84,11 @@ This guide focuses on the integration of external services so we will keep the U
 
 If everything went as planned, once you click on the **Login to Auth0** button, an Auth0 modal will pop-up requesting login.
 
-![Auth0 Login Screen ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/auth0-login-screenshot.jpg "Auth0 Login Screen")
+![Auth0 Login Screen ><][6]
 
 Finally, once you have authenticated using Auth0, your Auth0 user name will be displayed under the **Logout of Auth0** button.
 
-![Auth0 Successful login ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/auth0-login-success.jpg "Auth0 Successful login")
+![Auth0 Successful login ><][9]
 
 `ctrl c` to stop the app. We are now ready to integrate Firebase into the app. Let's get started!
 
@@ -100,23 +100,23 @@ Finally, once you have authenticated using Auth0, your Auth0 user name will be d
 
 Firebase is a service provided by Google so any gmail account will include Firebase. Log into **[Firebase][2]**. Once logged in, you will arrive at the Firebase Console. From your console, click on **Add Project**.
 
-![Firebase Add new project ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/firebase-new-project.jpg "Firebase Add new project")
+![Firebase Add new project ><][8]
 
 Then you will be prompted to name your project. It can be anything. For this guide, I called the project angular-auth0-lambda-project.
 
-![Firebase name new project ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/firebase-project-name.jpg "Firebase name new project")
+![Firebase name new project ><][12]
 
 In the next step you will be asked about additional Firebase features related to Google Analytics. These are outside the scope of this guide so **disable** the **Enable Google Analytics for this Project** toggle button. Then click the **Create project** button.
 
-![Firebase disable analytics ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/disable-analytics.jpg "Firebase disable analytics")
+![Firebase disable analytics ><][7]
 
 Once the project is created, we need to create an app within it to create a connection to the project from the outside. There are options to create iOS, Android, Web, or Unity apps. We want to create a Web app so click on the `</>` icon.
 
-![Firebase create app ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/firebase-create-app.jpg "Firebase create app")
+![Firebase create app ><][10]
 
 Next you will be prompted to add a nickname to your app. This is an internal name within your Firebase project, and you can name it whatever you want. After you name it, click the **Register app** button.
 
-![Firebase add app ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/firebase-add-app.jpg "Firebase add app")
+![Firebase add app ><][11]
 
 Once registered, a set of scripts will be presented. We only need part of these scripts. Copy the `firebaseConfig` object and save it locally as we will need it shortly. Once copied, click the **Continue to console** button.
 
@@ -159,11 +159,11 @@ ng add @angular/fire
 
 During the install of Firebase you may be prompted by Google to sign in and authorize an account to connect the Firebase CLI to. Once logged in you will be provided a code that you need to paste into the terminal.
 
-![Google Authorization of Firebase CLI ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/google-authorization.jpg "Google Authorization of Firebase CLI")
+![Google Authorization of Firebase CLI ><][13]
 
 Next you will be provided a list of Firebase projects and propted to select one to connect your app to. These steps will complete the AngularFire & Firebase CLI install.
 
-![Firebase CLI Login ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/firebase-cli-login.jpg "Firebase CLI Login")
+![Firebase CLI Login ><][14]
 
 Now that we have AngularFire and Firebase available, we need to import and initialize them into the app. Open `app.module.ts` and update it.
 
@@ -225,15 +225,15 @@ npm install firebase-admin --save
 
 Step 2, we need to get a Firebase key from Firebase. Log into your Firebase account (https://console.firebase.google.com) and select your project. Once in the project, click on the gear next to **Project Overview** and select **Project settings**
 
-![Firebase Project Settings ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/firebase-project-settings.jpg "Firebase Project Settings")
+![Firebase Project Settings ><][17]
 
 Click on the **Service Accounts** tab which displays options related to Firebase features of the project. Click the **Generate new private key**.
 
-![Firebase Generate Private Key ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/firebase-generate-private-key.jpg "Firebase Generate Private Key")
+![Firebase Generate Private Key ><][18]]
 
 A modal will popup confirming that you want to generate a new private key. The warning is in red for a reason. Store this file somewhere safe and never in a public repository. Click **Generate key**. Save the key anywhere that makes sense to you. We will need it shortly.
 
-![Firebase Generate Private Key Warning ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/firebase-private-key-warning.jpg "Firebase Generate Private Key Warning")
+![Firebase Generate Private Key Warning ><][19]
 
 > **Your Firebase Admin private key gives access to your project's Firebase services. Keep it confidential and never store it in a public repository.**
 
@@ -471,7 +471,7 @@ ng serve -o
 
 If all went well you should be able to generate a token by clicking the **AWS Lambda (get key)**.
 
-![Firebase token created from local server ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/firebase-local-token-success.jpg "Firebase token created from local server")
+![Firebase token created from local server ><][15]
 
 The last step in this guide is to now take that token and use it to authenticate to Firebase. To do that we need to head back over to `auth.service.ts` and update the `loginToFirebase()` function.
 
@@ -571,7 +571,7 @@ Next let's add a visual indicator to show the Firebase user id in `app.component
 
 Let's see if it worked. Restart the app if its not yet running and click thru all of it and hopefully you get a Firebase User Id back. You will notice that the user id begins with **auth0|...** and that is because we use the Auth0 UID as the UID when we requested the token from the Express server.
 
-![Firebase local login success ><](assets/images/blog/angular-user-authentication-using-auth0-firebase-and-aws-lambda/firebase-local-login-success.jpg "Firebase local login success")
+![Firebase local login success ><][16]
 
 **Congrats - Part 2 is complete!!**
 
@@ -587,4 +587,34 @@ In this post, we setup our Firebase project and integrated it into the Angular a
 
 [3]: https://www.richtillis.com/blog/simple-local-node-server-setup "Setting up a simple local HTTP server with Express"
 
-[4]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625422836/ng-aws-fb-blog/firebase-api-config_rsda9w.jpg "Firebase api config"
+[4]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625528939/ng-aws-fb-blog/firebase-api-config_yw3ius.jpg "Firebase api config"
+
+[5]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625528941/ng-aws-fb-blog/angular-app-main-content_ylvctl.jpg "Angular starter app layout"
+
+[6]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625528940/ng-aws-fb-blog/auth0-login-screenshot_viuqkb.jpg "Auth0 Login Screen"
+
+[7]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625528939/ng-aws-fb-blog/disable-analytics_ebyrn2.jpg "Firebase disable analytics"
+
+[8]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625528939/ng-aws-fb-blog/firebase-new-project_ddctzd.jpg "Firebase Add new project"
+
+[9]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625528940/ng-aws-fb-blog/auth0-login-success_jnhcfz.jpg "Auth0 Successful login"
+
+[10]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625528938/ng-aws-fb-blog/firebase-create-app_rupw0b.jpg "Firebase create app"
+
+[11]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625528938/ng-aws-fb-blog/firebase-add-app_ckjlrr.jpg "Firebase add app"
+
+[12]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625528939/ng-aws-fb-blog/firebase-project-name_g4gn6q.jpg "Firebase name new project"
+
+[13]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625528938/ng-aws-fb-blog/google-authorization_rouipc.jpg "Google Authorization of Firebase CLI"
+
+[14]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625528941/ng-aws-fb-blog/firebase-cli-login_njvcb3.jpg "Firebase CLI Login"
+
+[15]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625528941/ng-aws-fb-blog/firebase-local-token-success_s7kc65.jpg "Firebase token created from local server"
+
+[16]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625528941/ng-aws-fb-blog/firebase-local-login-success_fuuejb.jpg "Firebase local login success"
+
+[17]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625528939/ng-aws-fb-blog/firebase-project-settings_auklyo.jpg "Firebase Project Settings"
+
+[18]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625528939/ng-aws-fb-blog/firebase-generate-private-key_eco99p.jpg "Firebase Generate Private Key"
+
+[19]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625528941/ng-aws-fb-blog/firebase-private-key-warning_reqm08.jpg "Firebase Generate Private Key Warning"

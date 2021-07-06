@@ -86,9 +86,9 @@ Use `ctrl`+`c` keys to stop the app.
 
 ## Auth0 App Setup & Integration into the Angular App
 
-> Dan Arias of Auth0 wrote **[The Complete Guide to Angular User Authentication with Auth0][1]** that really is the complete Auth0 guide. I learned a great deal from it and much of this section comes from Dan's writing. All credit to Dan.
->
->**Additionally**, NG-Conf & the Auth0 Dev Rel team posted has a great walkthrough guide called [Authentication & Authorization in Angular with Auth0][10] on YouTube
+> Dan Arias of Auth0 wrote **[The Complete Guide to Angular User Authentication with Auth0][1]** that really is the complete Auth0 guide. I learned a great deal from it and much of this section comes from Dan's writing. All credit to Dan. 
+
+> NG-Conf & the Auth0 Dev Rel team posted has a great walkthrough guide called **[Authentication & Authorization in Angular with Auth0][10]** on YouTube
 
 ### Create the Auth0 App
 

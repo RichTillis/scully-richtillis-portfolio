@@ -3,11 +3,11 @@ title: Auth0, Firebase, & AWS Lambda User Auth (Part 1)
 description: Details the basic steps required to authenticate users into an Angular application using Auth0, AWS Lambda, and Firebase. 
 publish: true
 publishDate: 2021-04-13
-latestRevision: 2021-07-04
+latestRevision: 2021-07-24
 authorName: Rich Tillis
 authorTwitter: richtillis
 featured: false
-abstract: Auth using Auth0. Then mint a token with AWS Lambda, via AWS API Gateway (using Auth0 JWT), and use it to authenticate to Firebase.
+abstract: Authenticate using Auth0. Mint a token with AWS Lambda, via AWS API Gateway (using an Auth0 JWT), and use it to login to Firebase.
 image: https://res.cloudinary.com/dq8wrsecq/image/upload/v1613866571/angular-user-authentication-using-auth0-firebase-and-aws-lambda_x9zmhn.jpg
 imageThumbnail: https://res.cloudinary.com/dq8wrsecq/image/upload/w_300,h_200/v1613866571/angular-user-authentication-using-auth0-firebase-and-aws-lambda_x9zmhn.jpg
 heroImgCreatorName: Silvio Kundt
@@ -299,7 +299,7 @@ Finally, once you have authenticated using Auth0, your Auth0 user name will be d
 
 ## Wrap-up
 
-In this post, we setup our Angular app, as well as an Auth0 application, and integrated Auth0 authentication into the Angular app. In part 2 of this guide we will setup a Google Firebase project and integrate it into the Angular app. Stay Tuned!
+In this post, we setup our Angular app, as well as an Auth0 application, and integrated Auth0 authentication into the Angular app. In **[Part 2][18]** of this guide we will setup a Google Firebase project and integrate it into the app. Stay Tuned!
 
 [1]: https://auth0.com/blog/complete-guide-to-angular-user-authentication/ "The Complete Guide to Angular User Authentication with Auth0"
 
@@ -332,3 +332,5 @@ In this post, we setup our Angular app, as well as an Auth0 application, and int
 [16]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625528940/ng-aws-fb-blog/auth0-login-screenshot_viuqkb.jpg "Auth0 Login Screen"
 
 [17]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625528940/ng-aws-fb-blog/auth0-login-success_jnhcfz.jpg "Auth0 Successful login"
+
+[18]: https://www.richtillis.com/blog/auth0-firebase-aws-lambda-user-auth-part-2 "Auth0, Firebase, & AWS Lambda User Auth (Part 2)"

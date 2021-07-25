@@ -3,11 +3,11 @@ title: Auth0, Firebase, & AWS Lambda User Auth (Part 2)
 description: Details the basic steps required to authenticate users into an Angular application using Auth0, AWS Lambda, and Firebase. 
 publish: true
 publishDate: 2021-07-05
-latestRevision: 2021-07-05
+latestRevision: 2021-07-24
 authorName: Rich Tillis
 authorTwitter: richtillis
 featured: false
-abstract: Auth using Auth0. Then mint a token with AWS Lambda, via AWS API Gateway (using Auth0 JWT), and use it to authenticate to Firebase.
+abstract: Authenticate using Auth0. Mint a token with AWS Lambda, via AWS API Gateway (using an Auth0 JWT), and use it to login to Firebase.
 image: https://res.cloudinary.com/dq8wrsecq/image/upload/v1613866571/angular-user-authentication-using-auth0-firebase-and-aws-lambda_x9zmhn.jpg
 imageThumbnail: https://res.cloudinary.com/dq8wrsecq/image/upload/w_300,h_200/v1613866571/angular-user-authentication-using-auth0-firebase-and-aws-lambda_x9zmhn.jpg
 heroImgCreatorName: Silvio Kundt
@@ -445,7 +445,7 @@ Let's see if it worked. Restart the app if its not yet running and click thru al
 
 ## Wrap-up
 
-In this post, we setup our Firebase project and integrated it into the Angular app. We also setup a local Express server to test our code that created Firebase auth tokens. Finally we wired everything together to create a complete login process. In part 3 of this guide we will take the work we did setting up the Express server and migrate it to AWS lamba. Stay Tuned!
+In this post, we setup our Firebase project and integrated it into the Angular app. We also setup a local Express server to test our code that created Firebase auth tokens. Finally we wired everything together to create a complete login process. In **Part 3** of this guide we will take the work we did setting up the Express server and migrate it to AWS lamba. Stay Tuned!
 
 [1]: https://www.richtillis.com/blog/angular-user-auth-using-auth0-firebase-and-aws-lambda-part-1 "Angular User Auth Using Auth0, Firebase, & AWS Lambda (Part 1)"
 

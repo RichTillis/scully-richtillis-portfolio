@@ -3,7 +3,7 @@ title: Auth0, Firebase, & AWS Lambda User Auth (Part 2)
 description: Details the basic steps required to authenticate users into an Angular application using Auth0, AWS Lambda, and Firebase. 
 publish: true
 publishDate: 2021-07-05
-latestRevision: 2021-07-24
+latestRevision: 2021-07-25
 authorName: Rich Tillis
 authorTwitter: richtillis
 featured: false

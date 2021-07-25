@@ -27,7 +27,7 @@ export class HighlightBlogComponent implements OnInit {
     //async pipe in the html code
     map((filteredRoutes: ScullyRoute[]) => {
       return filteredRoutes.sort((postA: ScullyRoute, postB: ScullyRoute) => {
-        return ((+new Date(postB['latestRevision'])) - (+new Date(postA['latestRevision'])));
+        return ((+new Date(postB['publishDate'])) - (+new Date(postA['publishDate'])));
       });
     }),
   );

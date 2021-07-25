@@ -3,17 +3,13 @@
     <div class="card-contents">
       <div class="blog-image">
         <img [src]="blog.imageThumbnail" [alt]="blog.imgCredit">
-        <!-- <span>Photo by 
-          <a [href]=blog.heroImgCreatorUrl target="_blank" rel="noopener" aria-label="photographer link">{{blog.heroImgCreatorName}}</a> 
-          wtf 
-          <a [href]=blog.heroImgSourceUrl target="_blank" rel="noopener" aria-label="media source link">{{blog.heroImgSource}}</a>
-        </span> -->
       </div>
       <div class="blog-description">
         <h1>
           {{blog.title}}
         </h1>
-        <p class="publish-date">Published on {{blog.latestRevision | date: 'longDate'}}</p>
+        <p class="publish-date">Published on {{blog.publishDate | date: 'longDate'}}</p>
+        <p class="publish-date">Last Revised on {{blog.latestRevision | date: 'longDate'}}</p>
         <p class="abstract">{{blog.abstract}}</p>
       </div>
     </div>

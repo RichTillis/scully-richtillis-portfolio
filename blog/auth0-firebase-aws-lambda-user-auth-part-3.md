@@ -1,9 +1,9 @@
 ---
-title: Auth0, Firebase, & AWS Lambda User Auth (Part 2)
+title: Auth0, Firebase, & AWS Lambda User Auth (Part 3)
 description: Details the basic steps required to authenticate users into an Angular application using Auth0, AWS Lambda, and Firebase. 
-publish: true
+publish: false
 publishDate: 2021-07-05
-latestRevision: 2021-07-24
+latestRevision: 2021-07-05
 authorName: Rich Tillis
 authorTwitter: richtillis
 featured: false
@@ -39,8 +39,8 @@ This guide shows one way to integrate Auth0, AWS Lambda, and Google Firebase tog
 ### Guide Overview
 
 * **Part 1** - Setup of the Angular App and setup & integrate Auth0 into it.
-* **Part 2** - **(YOU ARE HERE)** Setup & integration of Firebase into the app.
-* **Part 3** - Setup of AWS API Gateway & Lambda to use by the app.
+* **Part 2** - Setup & integration of Firebase into the app.
+* **Part 3** - **(YOU ARE HERE)** Setup of AWS API Gateway & Lambda to use by the app.
 
 ### Prerequisites
 
@@ -56,7 +56,7 @@ git clone -b part2 --single-branch https://github.com/RichTillis/ng-auth0-lambda
 cd ng-auth0-lambda-firebase-demo/
 ```
 
-The `/auth0-config.json` will need to be updated with your Auth0 application domain and clientid.
+The `auth0-config.json` will need to be updated with your Auth0 application domain and clientid.
 
 ```json
 // auth0-config.json
@@ -328,6 +328,10 @@ export class AuthService {
 
   // ... existing property declarations 
 
+  //add these properties
+  private firebaseTokenSubject$: BehaviorSubject<string | undefined> = new BehaviorSubject<string | undefined>(undefined);
+  readonly firebaseToken$: Observable<any> = this.firebaseTokenSubject$.asObservable();
+
   //update the constructor
     constructor(private auth0Service: Auth0Service, @Inject(DOCUMENT) private doc: Document, private http: HttpClient) { }
 
@@ -343,8 +347,10 @@ export class AuthService {
       const params = new HttpParams().append('uid', auth0Uid!);
       this.http.get<any>(URL, { params }).subscribe((token: any) => {
         this.firebaseTokenSubject$.next(token.firebaseToken);
+        this.awsLambdaAuthTokenGenerated$.next(true);
       });
     });
+
   }
 ```
 
@@ -395,6 +401,68 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 export class AppModule { }
 ```
 
+Now let's update `app.component.ts` and add a property that uses `firebaseToken$`.
+
+```ts
+//app.component.ts
+
+//nothing above changes ...
+export class AppComponent {
+  // keep all the existing declarations
+
+  //add this
+  firebaseToken$: Observable<any> = this.authService.firebaseToken$;
+
+```
+
+Now update `app.component.html` with a little visual reassurance that the token was created.
+
+```html
+<!-- app.component.html -->
+
+<!-- update the last mat-grid-list -->
+    <mat-grid-list cols="3" rowHeight="4:1">
+
+      <mat-grid-tile *ngIf="auth0User$ | async as user">
+
+        <mat-card>
+          <mat-card-content>
+            <div>
+              Auth0 User Name:<br />
+              {{ user.name }}
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile *ngIf="firebaseToken$ | async as token">
+        <mat-card>
+          <mat-card-content>
+            <div>
+              Firebase Auth Token:<br>
+              <p id="firebase-token">{{ token! }}</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+      
+    </mat-grid-list>
+```
+
+The token is a large string. So instead of trying to display the whole thing, let's just display the first few characters. To do that we need add a little CSS to `app.component.scss`.
+
+```scss
+// app.component.scss
+
+//add this to the bottom of the file
+#firebase-token{
+  overflow: hidden;
+  max-width: 24ch;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+```
+
 Ok, moment of truth. Let's see if we can request and receive a token. Make sure the Express server is still running.
 
 ```bash
@@ -420,6 +488,10 @@ export class AuthService {
 
   // ... existing property declarations 
 
+  //add these properties
+  private firebaseUserIdSubject$: BehaviorSubject<string | undefined> = new BehaviorSubject<string | undefined>(undefined);
+  readonly firebaseUserId$: Observable<string | undefined> = this.firebaseUserIdSubject$.asObservable();
+
   //update the constructor
   constructor(private auth0Service: Auth0Service, @Inject(DOCUMENT) private doc: Document, private http: HttpClient, private afAuth: AngularFireAuth) { }
 
@@ -430,9 +502,71 @@ export class AuthService {
     this.firebaseToken$.subscribe(token => {
       this.afAuth.signInWithCustomToken(token!).then(firebaseUser => {
         this.firebaseUserIdSubject$.next(firebaseUser.user?.uid);
+        this.firebaseAuthenticated$.next(true);
       });
     });
   }
+```
+
+Now let's update `app.component.ts` and add a property that uses `firebaseToken$`.
+
+```ts
+//app.component.ts
+
+//nothing above changes ...
+export class AppComponent {
+  // keep all the existing declarations
+
+  //add this
+  firebaseUserId$: Observable<string | undefined> = this.authService.firebaseUserId$;
+
+```
+
+Next let's add a visual indicator to show the Firebase user id in `app.component.ts`.
+
+```html
+<!-- app.component.html -->
+
+<!-- update the last mat-grid-list -->
+    <mat-grid-list cols="3" rowHeight="4:1">
+
+      <mat-grid-tile *ngIf="auth0User$ | async as user">
+
+        <mat-card>
+          <mat-card-content>
+            <div>
+              Auth0 User Name:<br />
+              {{ user.name }}
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile *ngIf="firebaseToken$ | async as token">
+        <mat-card>
+          <mat-card-content>
+            <div>
+              Firebase Auth Token:<br>
+              <p id="firebase-token">{{ token! }}</p>
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+      </mat-grid-tile>
+
+      <mat-grid-tile *ngIf="firebaseUserId$ | async as firebaseUser">
+        <mat-card>
+          <mat-card-content>
+            <div>
+              Firebase User Id:<br />
+              {{ firebaseUser }}
+            </div>
+          </mat-card-content>
+        </mat-card>
+
+      </mat-grid-tile>
+      
+    </mat-grid-list>
 ```
 
 Let's see if it worked. Restart the app if its not yet running and click thru all of it and hopefully you get a Firebase User Id back. You will notice that the user id begins with **auth0|...** and that is because we use the Auth0 UID as the UID when we requested the token from the Express server.
@@ -445,7 +579,7 @@ Let's see if it worked. Restart the app if its not yet running and click thru al
 
 ## Wrap-up
 
-In this post, we setup our Firebase project and integrated it into the Angular app. We also setup a local Express server to test our code that created Firebase auth tokens. Finally we wired everything together to create a complete login process. In **Part 3** of this guide we will take the work we did setting up the Express server and migrate it to AWS lamba. Stay Tuned!
+In this post, we setup our Firebase project and integrated it into the Angular app. We also setup a local Express server to test our code that created Firebase auth tokens. Finally we wired everything together to create a complete login process. In part 3 of this guide we will take the work we did setting up the Express server and migrate it to AWS lamba. Stay Tuned!
 
 [1]: https://www.richtillis.com/blog/angular-user-auth-using-auth0-firebase-and-aws-lambda-part-1 "Angular User Auth Using Auth0, Firebase, & AWS Lambda (Part 1)"
 

@@ -3,11 +3,11 @@ title: Auth0, Firebase, & AWS Lambda User Auth (Part 1)
 description: Details the basic steps required to authenticate users into an Angular application using Auth0, AWS Lambda, and Firebase. 
 publish: true
 publishDate: 2021-04-13
-latestRevision: 2021-07-04
+latestRevision: 2021-07-24
 authorName: Rich Tillis
 authorTwitter: richtillis
-featured: true
-abstract: Auth using Auth0. Then mint a token with AWS Lambda, via AWS API Gateway (using Auth0 JWT), and use it to authenticate to Firebase.
+featured: false
+abstract: Authenticate using Auth0. Mint a token with AWS Lambda, via AWS API Gateway (using an Auth0 JWT), and use it to login to Firebase.
 image: https://res.cloudinary.com/dq8wrsecq/image/upload/v1613866571/angular-user-authentication-using-auth0-firebase-and-aws-lambda_x9zmhn.jpg
 imageThumbnail: https://res.cloudinary.com/dq8wrsecq/image/upload/w_300,h_200/v1613866571/angular-user-authentication-using-auth0-firebase-and-aws-lambda_x9zmhn.jpg
 heroImgCreatorName: Silvio Kundt
@@ -114,7 +114,7 @@ All done setting up the Auth0 app.
 
 ### Integrate Auth0 into the Angular App
 
-Open the Angular app. First thing we want to do is update the `src/tsconfig.json` file and add `"resolveJsonModule": true`. This setting will allow us to import `.json` files into the app's TypeScript modules.
+Open the Angular app. First thing we want to do is update the `/tsconfig.json` file and add `"resolveJsonModule": true`. This setting will allow us to import `.json` files into the app's TypeScript modules.
 
 ```json
 // tsconfig.json
@@ -231,17 +231,17 @@ import { AuthService as Auth0Service } from '@auth0/auth0-angular';
   providedIn: 'root'
 })
 export class AuthService {
-  //replace isAuth0Authenticated$ assignment
-  readonly isAuth0Authenticated$: Observable<boolean> = this.auth0Service.isAuthenticated$;
+  // remove auth0UserSubject
+  // private auth0UserSubject$: BehaviorSubject<any> = new BehaviorSubject<any>(undefined);
 
-  //add this
+  // replace auth0User$ assignment
   readonly auth0User$ = this.auth0Service.user$;
 
-  private awsLambdaAuthTokenGenerated$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  readonly isAwsLambdaAuthTokenGenerated$: Observable<boolean> = this.awsLambdaAuthTokenGenerated$.asObservable();
+  private firebaseTokenSubject$: BehaviorSubject<string | undefined> = new BehaviorSubject<string | undefined>(undefined);
+  readonly firebaseToken$: Observable<any> = this.firebaseTokenSubject$.asObservable();
 
-  private firebaseAuthenticated$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  readonly isFirebaseAuthenticated$: Observable<boolean> = this.firebaseAuthenticated$.asObservable();
+  private firebaseUserIdSubject$: BehaviorSubject<string | undefined> = new BehaviorSubject<string | undefined>(undefined);
+  readonly firebaseUserId$: Observable<string | undefined> = this.firebaseUserIdSubject$.asObservable();
 
   // update the constructor
   constructor(private auth0Service: Auth0Service, @Inject(DOCUMENT) private doc: Document) { }
@@ -256,128 +256,30 @@ export class AuthService {
     this.auth0Service.logout({ returnTo: this.doc.location.origin });
   }
 
-  // update this method
-  logout() {
-    this.logoutOfAuth0();
-    this.awsLambdaAuthTokenGenerated$.next(false);
-    this.firebaseAuthenticated$.next(false);
-  }
-
   getTokenFromLambda() {
-    this.awsLambdaAuthTokenGenerated$.next(true);
+    this.firebaseTokenSubject$.next("MyPretendToken_ABCD123EFG456");
   }
 
   loginToFirebase() {
-    this.firebaseAuthenticated$.next(true);
+    this.firebaseUserIdSubject$.next("Pretend_Firebase_user");
   }
+
+  // update this method
+  logout() {
+    this.logoutOfAuth0();
+    this.firebaseTokenSubject$.next(undefined);
+    this.firebaseUserIdSubject$.next(undefined);
+  }
+
+  logoutOfFirebase(){
+    this.firebaseTokenSubject$.next(undefined);
+    this.firebaseUserIdSubject$.next(undefined);
+  }
+
 }
 ```
 
-That's it. Auth0 should be wired in. Next let's add something to the `app.component` to help visually see when Auth0 login/logout is successful.
-
-Update `src/app/app.component.ts` and add an auth0User$ property to bind to the Auth service property so we can use it in the app template:
-
-```ts
-// app.component.ts
-
-// All the above imports and decorator details remain unchanged
-export class AppComponent {
-  // Add this
-  auth0User$: Observable<any> = this.authService.auth0User$;
-  // All the component details remain unchanged
-```
-
-Lastly we want to add a component to display the Auth0 user name.
-
-```html
-<!-- app.component.html -->
-<div class="content" role="main">
-  <app-icon-logo></app-icon-logo>
-  <div class="icon-container">
-    <mat-grid-list cols="3" rowHeight="4:1">
-
-      <mat-grid-tile>
-        <mat-card>
-          <mat-card-content>
-
-            <button
-              mat-raised-button
-              (click)="loginToAuth0()"
-              class="auth0-color"
-              *ngIf="!(isLoggedintoAuth0$ | async)">Login to Auth0
-            </button>
-
-            <button
-              mat-raised-button
-              (click)="logoutOfAuth0()"
-              class="auth0-color"
-              *ngIf="(isLoggedintoAuth0$ | async)">Logout of Auth0
-            </button>
-          </mat-card-content>
-        </mat-card>
-      </mat-grid-tile>
-
-      <mat-grid-tile>
-        <mat-card>
-          <mat-card-content>
-
-            <button
-              mat-raised-button
-              (click)="getTokenFromLambda()"
-              class="lambda-color"
-              [disabled]="!(isLoggedintoAuth0$ | async)">AWS Lambda (get key)
-            </button>
-
-          </mat-card-content>
-        </mat-card>
-      </mat-grid-tile>
-
-      <mat-grid-tile>
-        <mat-card>
-          <mat-card-content>
-
-            <button
-              mat-raised-button
-              class="firebase-color" (click)="loginToFirebase()"
-              [disabled]="!(isTokenGenerated$ | async)"
-              *ngIf="!(isLoggedintoFirebase$ | async)">Login to Firebase
-            </button>
-
-            <button
-              mat-raised-button
-              class="firebase-color"
-              (click)="logoutOfFirebase()"
-              *ngIf="(isLoggedintoFirebase$ | async)">Logout of Firebase
-            </button>
-
-          </mat-card-content>
-        </mat-card>
-      </mat-grid-tile>
-
-    </mat-grid-list>
-
-    <!-- Add This -->
-    <mat-grid-list cols="3" rowHeight="4:1">
-
-      <mat-grid-tile *ngIf="auth0User$ | async as user">
-        <mat-card>
-          <mat-card-content>
-            <div >
-              Auth0 User Name:<br/>
-              {{ user.name }}
-            </div>
-          </mat-card-content>
-        </mat-card>
-      </mat-grid-tile>
-
-    </mat-grid-list>
-  </div>
-</div>
-
-<router-outlet></router-outlet>
-```
-
-Moment of truth. Start up the app and login/signup to Auth0.
+That's it. Auth0 should be wired in. Moment of truth. Start up the app and login/signup to Auth0.
 
 ```bash
 ng serve -o
@@ -397,7 +299,7 @@ Finally, once you have authenticated using Auth0, your Auth0 user name will be d
 
 ## Wrap-up
 
-In this post, we setup our Angular app, as well as an Auth0 application, and integrated Auth0 authentication into the Angular app. In part 2 of this guide we will setup a Google Firebase project and integrate it into the Angular app. Stay Tuned!
+In this post, we setup our Angular app, as well as an Auth0 application, and integrated Auth0 authentication into the Angular app. In **[Part 2][18]** of this guide we will setup a Google Firebase project and integrate it into the app. Stay Tuned!
 
 [1]: https://auth0.com/blog/complete-guide-to-angular-user-authentication/ "The Complete Guide to Angular User Authentication with Auth0"
 
@@ -430,3 +332,5 @@ In this post, we setup our Angular app, as well as an Auth0 application, and int
 [16]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625528940/ng-aws-fb-blog/auth0-login-screenshot_viuqkb.jpg "Auth0 Login Screen"
 
 [17]: https://res.cloudinary.com/dq8wrsecq/image/upload/v1625528940/ng-aws-fb-blog/auth0-login-success_jnhcfz.jpg "Auth0 Successful login"
+
+[18]: https://www.richtillis.com/blog/auth0-firebase-aws-lambda-user-auth-part-2 "Auth0, Firebase, & AWS Lambda User Auth (Part 2)"

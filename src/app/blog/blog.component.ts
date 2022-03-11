@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router, ROUTES } from '@angular/router';
 import { ScullyRoute, ScullyRoutesService } from '@scullyio/ng-lib';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 declare var ng: any;
@@ -11,14 +12,19 @@ declare var ng: any;
   styleUrls: ['./blog.component.scss'],
 })
 export class BlogComponent implements OnInit {
+
   ngOnInit() {
-    // this.scully.available$.subscribe(routes => console.log(routes));
+    // this.links$.subscribe((links) => {
+    //   console.log(links);
+    // });
   }
 
   constructor(private scully: ScullyRoutesService) {
   }
 
-  $blogPosts = this.scully.available$.pipe(
+
+  $blogPosts : Observable<ScullyRoute[]> = this.scully.available$
+  .pipe(
     map(routes =>
       routes.filter(
         route =>

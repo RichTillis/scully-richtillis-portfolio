@@ -28,21 +28,21 @@ import { DisqusModule } from "ngx-disqus";
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(private library: FaIconLibrary) {
-    library.addIcons(
-      faSquare,
-      faCheckSquare,
-      farSquare,
-      farCheckSquare,
-      faStackOverflow,
-      faGithub,
-      faMedium,
-      faAt,
-      faLinkedin,
-      faGithub,
-      faTwitter,
-      faGooglePlay,
-      faAppStoreIos
-    );
+  constructor() {
+    // library.addIcons(
+    //   faSquare,
+    //   faCheckSquare,
+    //   farSquare,
+    //   farCheckSquare,
+    //   faStackOverflow,
+    //   faGithub,
+    //   faMedium,
+    //   faAt,
+    //   faLinkedin,
+    //   faGithub,
+    //   faTwitter,
+    //   faGooglePlay,
+    //   faAppStoreIos
+    // );
   }
 }

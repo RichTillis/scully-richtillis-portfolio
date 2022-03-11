@@ -18,16 +18,7 @@ import { faStackOverflow, faGithub, faLinkedin, faTwitter, faGooglePlay, faAppSt
   ]
 })
 export class ProjectsModule {
-  constructor(private library: FaIconLibrary) {
-    library.addIcons(
-      faStackOverflow,
-      faGithub,
-      faLinkedin,
-      faGithub,
-      faTwitter,
-      faGooglePlay,
-      faAppStoreIos,
-      faAppStore
-    );
+  constructor() {
+
   }
 }

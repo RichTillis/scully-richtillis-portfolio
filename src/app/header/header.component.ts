@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { faAt } from '@fortawesome/free-solid-svg-icons';
+import { faStackOverflow, faGithub, faLinkedin, faTwitter} from '@fortawesome/free-brands-svg-icons';
 
 @Component({
   selector: 'app-header',
@@ -6,6 +8,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+  faAt = faAt;
+  faStackOverflow = faStackOverflow;
+  faGithub = faGithub;
+  faLinkedin = faLinkedin;
+  faTwitter = faTwitter;
 
   menuOpen: boolean = false;
 

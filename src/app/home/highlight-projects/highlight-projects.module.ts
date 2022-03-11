@@ -11,16 +11,7 @@ import { HighlightProjectsComponent } from './highlight-projects.component';
     exports: [HighlightProjectsComponent]
 })
 export class HighlightProjectsModule {
-    constructor(private library: FaIconLibrary) {
-        library.addIcons(
-            faStackOverflow,
-            faGithub,
-            faLinkedin,
-            faGithub,
-            faTwitter,
-            faGooglePlay,
-            faAppStoreIos,
-            faAppStore
-        );
+    constructor() {
+
     }
 }

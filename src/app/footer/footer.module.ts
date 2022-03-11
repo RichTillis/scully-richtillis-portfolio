@@ -19,14 +19,14 @@ import { FooterComponent } from './footer.component';
   exports: [FooterComponent]
 })
 export class FooterModule {
-  constructor(private library: FaIconLibrary) {
-    library.addIcons(
-      faStackOverflow,
-      faGithub,
-      faAt,
-      faLinkedin,
-      faGithub,
-      faTwitter
-    );
+  constructor() {
+    // library.addIcons(
+    //   faStackOverflow,
+    //   faGithub,
+    //   faAt,
+    //   faLinkedin,
+    //   faGithub,
+    //   faTwitter
+    // );
   }
 }

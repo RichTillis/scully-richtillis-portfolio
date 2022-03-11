@@ -1,0 +1,13 @@
+identifier: lf0elcn5v0k3c370
+appPort: 1864
+staticPort: 1668
+reloadPort: 2667
+hostName: localhost
+projectName: richtillis-portfolio-app
+homeFolder: >-
+  /media/rich/2TB-secondary/dev/projects/portfolio-site/scully-richtillis-portfolio
+distFolder: dist/richtillis-portfolio-app
+outDir: >-
+  /media/rich/2TB-secondary/dev/projects/portfolio-site/scully-richtillis-portfolio/dist/static
+handle404: ''
+allowErrorCollect: true
